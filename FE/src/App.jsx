@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Footer from "./components/shared/footer";
 import Navbar from "./components/shared/navbar";
+import Card from "./components/card";
 
 function App() {
   return (
@@ -14,8 +15,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
-        <Footer/>
+       
       </div>
+      <Footer/>
     </div>
   );
 }
