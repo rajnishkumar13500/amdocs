@@ -1,9 +1,14 @@
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Card = ({ img, topic, description, link }) => {
+  const navigate = useNavigate();
+
   return (
-    <div className="max-w-sm rounded-lg overflow-hidden shadow-lg bg-white transition-transform duration-300 hover:scale-105">
+    <div 
+      className="max-w-sm rounded-lg overflow-hidden shadow-lg bg-white transition-transform duration-300 hover:scale-105 cursor-pointer"
+      onClick={() => navigate(`/course/${link}`)}
+    >
       <img 
         className="w-full h-48 object-cover" 
         src={img} 
@@ -16,12 +21,11 @@ const Card = ({ img, topic, description, link }) => {
         </p>
       </div>
       <div className="px-6 py-4">
-        <Link
-          to={link}
+        <button
           className="inline-block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-300"
         >
           Learn More
-        </Link>
+        </button>
       </div>
     </div>
   );
