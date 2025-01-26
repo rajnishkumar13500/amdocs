@@ -5,6 +5,8 @@ import Login from "./components/auth/login";
 import Signup from "./components/auth/signup";
 import CourseDetails from "./pages/CourseDetails";
 import Courses from "./components/course/coursePage";
+import Details from "./components/userInfo/details";
+import SkillInfo from "./components/userInfo/userSkillinfo";
 
 function App() {
   return (
@@ -12,7 +14,7 @@ function App() {
       <Navbar />
       <div className="container mx-auto px-4 py-8">
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<SkillInfo />} />
           <Route path="/about" element={<About />} />
           <Route path="/courses" element={<Courses />} />
           <Route path="/signup" element={<Signup />} />
