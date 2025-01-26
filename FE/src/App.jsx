@@ -7,6 +7,7 @@ import CourseDetails from "./pages/CourseDetails";
 import Courses from "./components/course/coursePage";
 import Details from "./components/userInfo/details";
 import SkillInfo from "./components/userInfo/userSkillinfo";
+import About from "./components/pages/about"; 
 
 function App() {
   return (
@@ -30,8 +31,7 @@ function App() {
 }
 
 // Temporary placeholder components
-const Home = () => <h1 className="text-2xl font-bold">Home Page</h1>;
-const About = () => <h1 className="text-2xl font-bold">About Page</h1>;
+// const Home = () => <h1 className="text-2xl font-bold">Home Page</h1>;
 const Profile = () => <h1 className="text-2xl font-bold">Profile Page</h1>;
 
 export default App;
