@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              Int         @id @default(autoincrement())
+  name            String
+  email           String      @unique
+  password        String  
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  // User preferences and settings
+  education       String      @default("")
+  goals           String      @default("")
+  learningStyle   String      @default("")
+  timeAvailable   Int         @default(0)
+  learningPace    Int         @default(0)
+  WeeklyHours     Int         @default(0)
+  platformVisited Int         @default(0)
+
+  // Skill levels
+  python          Int         @default(0)
+  Statistics      Int         @default(0)
+  MachineLearning Int         @default(0)
+  HTML_CSS        Int         @default(0)
+  JavaScript      Int         @default(0)
+  React           Int         @default(0)
+  SocialMedia     Int         @default(0)
+  SEO             Int         @default(0)
+  Analytics       Int         @default(0)
+  
+  // Relations
+  enrolledCourses UserCourse[]
+}
+
+model Course {
+  id                    Int      @id @default(autoincrement())
+  name                  String
+  description           String
+  Link                  String
+  image                 String
+  Duration              String
+  Instructor            String
+  Cost                  Int      @default(0)
+  LearningRequirements  String   @default("")
+  Prerequisites         String   @default("")
+  CourseStructure       String   @default("")
+  price                Int      @default(0)
+  createdAt            DateTime @default(now())
+  completed            Int      @default(0)
+  
+  // Relations
+  enrolledUsers        UserCourse[]
+}
+
+model UserCourse {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  courseId    Int
+  progress    Int      @default(0)
+  enrolledAt  DateTime @default(now())
+  
+  // Relations
+  user        User     @relation(fields: [userId], references: [id])
+  course      Course   @relation(fields: [courseId], references: [id])
+
+  @@unique([userId, courseId])
+}
