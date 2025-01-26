@@ -1,7 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import Footer from "./components/shared/footer";
 import Navbar from "./components/shared/navbar";
-import Card from "./components/card";
+import CourseDetails from "./pages/CourseDetails";
+import Courses from "./components/course/coursePage";
 
 function App() {
   return (
@@ -11,11 +12,11 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/courses" element={<Courses />} />
+          <Route path="/courses" element={<Courses/>} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/course/:courseId" element={<CourseDetails />} />
         </Routes>
-       
       </div>
       <Footer/>
     </div>
@@ -25,7 +26,6 @@ function App() {
 // Temporary placeholder components
 const Home = () => <h1 className="text-2xl font-bold">Home Page</h1>;
 const About = () => <h1 className="text-2xl font-bold">About Page</h1>;
-const Courses = () => <h1 className="text-2xl font-bold">Courses Page</h1>;
 const Login = () => <h1 className="text-2xl font-bold">Login Page</h1>;
 const Profile = () => <h1 className="text-2xl font-bold">Profile Page</h1>;
 
