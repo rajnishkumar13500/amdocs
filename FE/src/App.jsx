@@ -6,7 +6,6 @@ import Signup from "./components/auth/signup";
 import CourseDetails from "./pages/CourseDetails";
 import Courses from "./components/course/coursePage";
 
-
 function App() {
   return (
     <div className="min-h-screen bg-gray-50">
@@ -17,13 +16,13 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/courses" element={<Courses />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/courses" element={<Courses/>} />
+          <Route path="/courses" element={<Courses />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/course/:courseId" element={<CourseDetails />} />
         </Routes>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
@@ -31,7 +30,6 @@ function App() {
 // Temporary placeholder components
 const Home = () => <h1 className="text-2xl font-bold">Home Page</h1>;
 const About = () => <h1 className="text-2xl font-bold">About Page</h1>;
-const Courses = () => <h1 className="text-2xl font-bold">Courses Page</h1>;
 const Profile = () => <h1 className="text-2xl font-bold">Profile Page</h1>;
 
 export default App;
