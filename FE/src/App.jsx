@@ -3,6 +3,9 @@ import Footer from "./components/shared/footer";
 import Navbar from "./components/shared/navbar";
 import Login from "./components/auth/login";
 import Signup from "./components/auth/signup";
+import CourseDetails from "./pages/CourseDetails";
+import Courses from "./components/course/coursePage";
+
 
 function App() {
   return (
@@ -14,8 +17,10 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/courses" element={<Courses />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/courses" element={<Courses/>} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/course/:courseId" element={<CourseDetails />} />
         </Routes>
       </div>
       <Footer/>
@@ -27,8 +32,6 @@ function App() {
 const Home = () => <h1 className="text-2xl font-bold">Home Page</h1>;
 const About = () => <h1 className="text-2xl font-bold">About Page</h1>;
 const Courses = () => <h1 className="text-2xl font-bold">Courses Page</h1>;
-// const Login = () => <h1 className="text-2xl font-bold">Login Page</h1>;
-// const Signup = () => <h1 className="text-2xl font-bold">Signup Page</h1>;
 const Profile = () => <h1 className="text-2xl font-bold">Profile Page</h1>;
 
 export default App;
