@@ -5,9 +5,11 @@ import Login from "./components/auth/login";
 import Signup from "./components/auth/signup";
 import CourseDetails from "./pages/CourseDetails";
 import Courses from "./components/course/coursePage";
-import Details from "./components/userInfo/details";
+// import Details from "./components/userInfo/details";
 import SkillInfo from "./components/userInfo/userSkillinfo";
-import About from "./components/pages/about"; 
+import About from "./components/pages/about";
+import UserDashboard from "./components/dashboard/userDashboard";
+import AuthProctor from "./components/auth/authProctor";
 
 function App() {
   return (
@@ -15,6 +17,14 @@ function App() {
       <Navbar />
       <div className="container mx-auto px-4 py-8">
         <Routes>
+          <Route
+            path="/dashboard"
+            element={
+              <AuthProctor>
+                <UserDashboard />
+              </AuthProctor>
+            }
+          />
           <Route path="/" element={<SkillInfo />} />
           <Route path="/about" element={<About />} />
           <Route path="/courses" element={<Courses />} />
