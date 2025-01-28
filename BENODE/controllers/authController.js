@@ -1,6 +1,6 @@
-const { PrismaClient } = require('@prisma/client');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const { PrismaClient } = require("@prisma/client");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const prisma = new PrismaClient();
 
@@ -8,11 +8,11 @@ const authController = {
   signup: async (req, res) => {
     try {
       const { name, email, password } = req.body;
-      
+
       // Check if user already exists
       const existingUser = await prisma.user.findUnique({ where: { email } });
       if (existingUser) {
-        return res.status(400).json({ error: 'User already exists' });
+        return res.status(400).json({ error: "User already exists" });
       }
 
       // Hash password
@@ -27,12 +27,26 @@ const authController = {
         },
       });
 
-      // Generate token
-      const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
+      // Generate token with more user info
+      const token = jwt.sign(
+        {
+          userId: user.id,
+          name: user.name,
+          email: user.email,
+        },
+        process.env.JWT_SECRET
+      );
 
-      res.status(201).json({ token });
+      res.status(201).json({
+        token,
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+        },
+      });
     } catch (error) {
-      res.status(500).json({ error: 'Error creating user' });
+      res.status(500).json({ error: "Error creating user" });
     }
   },
 
@@ -43,27 +57,41 @@ const authController = {
       // Find user
       const user = await prisma.user.findUnique({ where: { email } });
       if (!user) {
-        return res.status(400).json({ error: 'User not found' });
+        return res.status(400).json({ error: "User not found" });
       }
 
       // Check password
       const validPassword = await bcrypt.compare(password, user.password);
       if (!validPassword) {
-        return res.status(400).json({ error: 'Invalid password' });
+        return res.status(400).json({ error: "Invalid password" });
       }
 
-      // Generate token
-      const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
+      // Generate token with more user info
+      const token = jwt.sign(
+        {
+          userId: user.id,
+          name: user.name,
+          email: user.email,
+        },
+        process.env.JWT_SECRET
+      );
 
-      res.json({ token });
+      res.json({
+        token,
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+        },
+      });
     } catch (error) {
-      res.status(500).json({ error: 'Error logging in' });
+      res.status(500).json({ error: "Error logging in" });
     }
   },
 
   updateProfile: async (req, res) => {
     try {
-      const { 
+      const {
         name,
         education,
         goals,
@@ -81,7 +109,7 @@ const authController = {
         React,
         SocialMedia,
         SEO,
-        Analytics
+        Analytics,
       } = req.body;
 
       const updatedUser = await prisma.user.update({
@@ -91,20 +119,32 @@ const authController = {
           education: education || undefined,
           goals: goals || undefined,
           learningStyle: learningStyle || undefined,
-          timeAvailable: timeAvailable !== undefined ? parseInt(timeAvailable) : undefined,
-          learningPace: learningPace !== undefined ? parseInt(learningPace) : undefined,
-          WeeklyHours: WeeklyHours !== undefined ? parseInt(WeeklyHours) : undefined,
-          platformVisited: platformVisited !== undefined ? parseInt(platformVisited) : undefined,
+          timeAvailable:
+            timeAvailable !== undefined ? parseInt(timeAvailable) : undefined,
+          learningPace:
+            learningPace !== undefined ? parseInt(learningPace) : undefined,
+          WeeklyHours:
+            WeeklyHours !== undefined ? parseInt(WeeklyHours) : undefined,
+          platformVisited:
+            platformVisited !== undefined
+              ? parseInt(platformVisited)
+              : undefined,
           // Skill levels
           python: python !== undefined ? parseInt(python) : undefined,
-          Statistics: Statistics !== undefined ? parseInt(Statistics) : undefined,
-          MachineLearning: MachineLearning !== undefined ? parseInt(MachineLearning) : undefined,
+          Statistics:
+            Statistics !== undefined ? parseInt(Statistics) : undefined,
+          MachineLearning:
+            MachineLearning !== undefined
+              ? parseInt(MachineLearning)
+              : undefined,
           HTML_CSS: HTML_CSS !== undefined ? parseInt(HTML_CSS) : undefined,
-          JavaScript: JavaScript !== undefined ? parseInt(JavaScript) : undefined,
+          JavaScript:
+            JavaScript !== undefined ? parseInt(JavaScript) : undefined,
           React: React !== undefined ? parseInt(React) : undefined,
-          SocialMedia: SocialMedia !== undefined ? parseInt(SocialMedia) : undefined,
+          SocialMedia:
+            SocialMedia !== undefined ? parseInt(SocialMedia) : undefined,
           SEO: SEO !== undefined ? parseInt(SEO) : undefined,
-          Analytics: Analytics !== undefined ? parseInt(Analytics) : undefined
+          Analytics: Analytics !== undefined ? parseInt(Analytics) : undefined,
         },
         select: {
           id: true,
@@ -127,19 +167,19 @@ const authController = {
           SEO: true,
           Analytics: true,
           createdAt: true,
-          updatedAt: true
-        }
+          updatedAt: true,
+        },
       });
 
       res.json({
-        message: 'Profile updated successfully',
-        user: updatedUser
+        message: "Profile updated successfully",
+        user: updatedUser,
       });
     } catch (error) {
-      console.error('Update profile error:', error);
-      res.status(500).json({ error: 'Error updating profile' });
+      console.error("Update profile error:", error);
+      res.status(500).json({ error: "Error updating profile" });
     }
   },
 };
 
-module.exports = authController; 
+module.exports = authController;

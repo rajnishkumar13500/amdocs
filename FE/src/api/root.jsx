@@ -1,5 +1,5 @@
 export const apiRoot = {
-  baseAPI: "https://localhost:3000/api",
+  baseAPI: "http://localhost:3000/api",
 };
 
 // api versions
