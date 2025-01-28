@@ -1,28 +1,30 @@
-import { useParams } from 'react-router-dom';
-import CourseDescription from '../components/course/discriptionCard';
-import BillingCard from '../components/course/BillingCard';
+import { useParams } from "react-router-dom";
+import CourseDescription from "../components/course/discriptionCard";
+import BillingCard from "../components/course/BillingCard";
 
 const CourseDetails = () => {
   const { courseId } = useParams();
-
+  // const [courseData, setCourseData] = useState(null);
   // In a real application, you would fetch course data based on courseId
   const courseData = {
     courseImage: "https://example.com/course-image.jpg",
     courseTitle: "Advanced React Development",
-    description: "A comprehensive course covering advanced React concepts including hooks, context, performance optimization, and more. This course is designed for developers who want to take their React skills to the next level.",
+    description:
+      "A comprehensive course covering advanced React concepts including hooks, context, performance optimization, and more. This course is designed for developers who want to take their React skills to the next level.",
     structure: [
       {
         title: "Introduction to Advanced Concepts",
-        description: "Learn about advanced React patterns and concepts..."
+        description: "Learn about advanced React patterns and concepts...",
       },
       {
         title: "State Management",
-        description: "Deep dive into Redux and other state management solutions..."
+        description:
+          "Deep dive into Redux and other state management solutions...",
       },
       {
         title: "Performance Optimization",
-        description: "Learn techniques to optimize React applications..."
-      }
+        description: "Learn techniques to optimize React applications...",
+      },
     ],
     duration: "12 weeks",
     cost: 29999,
@@ -30,14 +32,14 @@ const CourseDetails = () => {
     prerequisites: [
       "Basic knowledge of JavaScript",
       "Understanding of React basics",
-      "Familiarity with ES6+"
+      "Familiarity with ES6+",
     ],
     learningOutcomes: [
       "Build complex React applications",
       "Implement advanced state management",
       "Create custom hooks and components",
-      "Optimize React applications for performance"
-    ]
+      "Optimize React applications for performance",
+    ],
   };
 
   return (
@@ -54,4 +56,4 @@ const CourseDetails = () => {
   );
 };
 
-export default CourseDetails; 
+export default CourseDetails;

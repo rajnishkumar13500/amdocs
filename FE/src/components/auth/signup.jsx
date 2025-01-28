@@ -43,7 +43,7 @@ const Signup = () => {
     }
 
     try {
-      const response = await apiClient.post(apiList.signup, {
+      const response = await apiClient.post(apiList.userSignup, {
         name: formData.name,
         email: formData.email,
         password: formData.password,
