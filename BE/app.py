@@ -9,7 +9,7 @@ import json
 import ast
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 class CourseRecommender:
     def __init__(self):
@@ -289,4 +289,9 @@ def get_feature_importance():
     }), 200
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000) 
+    # This is used when running locally only. When deploying to Vercel, 
+    # the Vercel server will look for the Flask app directly
+    app.run(host='0.0.0.0', debug=False)
+
+# Add this line at the end of the file to expose the Flask app to Vercel
+app = app 
