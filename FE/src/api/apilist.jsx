@@ -19,4 +19,9 @@ export const apiList = {
     apiVersionControl.v1,
     endPoints.authUpdateProfile
   ),
+  allCourses: constructURL(
+    apiRoot.baseAPI,
+    apiVersionControl.v1,
+    endPoints.courses
+  ),
 };
