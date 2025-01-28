@@ -23,6 +23,7 @@ model User {
   learningPace    Int         @default(0)
   WeeklyHours     Int         @default(0)
   platformVisited Int         @default(0)
+  isupdated       Boolean     @default(false)
 
   // Skill levels
   python          Int         @default(0)
