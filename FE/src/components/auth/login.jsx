@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 import { apiList } from "../../api/apilist";
 import { apiClient } from "../../api/api";
 import { storeUserInfo } from "./auth.service";
@@ -35,7 +35,9 @@ const Login = () => {
 
       if (response.data.token) {
         storeUserInfo(response.data.token);
+        // setTimeout(() => {
         navigate("/dashboard");
+        // }, 100);
       }
     } catch (err) {
       setError(err.response?.data?.message || "Invalid email or password");

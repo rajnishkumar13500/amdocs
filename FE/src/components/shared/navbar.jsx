@@ -1,10 +1,26 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FiMenu, FiX } from 'react-icons/fi';
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { FiMenu, FiX } from "react-icons/fi";
+import { getUserInfo, loggedOut } from "../auth/auth.service";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); 
+  const [isLogged, setIsLogged] = useState(false);
+  const navigate = useNavigate();
+  const user = getUserInfo();
+
+  useEffect(() => {
+    if (user) {
+      setIsLogged(true);
+    } else {
+      setIsLogged(false);
+    }
+  }, [user]);
+
+  const handleLogout = () => {
+    loggedOut();
+    navigate("/login");
+  };
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -21,7 +37,7 @@ const Navbar = () => {
                 Logo
               </Link>
             </div>
-            
+
             {/* Desktop Navigation */}
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
               <Link
@@ -47,7 +63,7 @@ const Navbar = () => {
 
           {/* Secondary Navigation - Auth & Profile */}
           <div className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-4">
-            {isLoggedIn ? (
+            {isLogged ? (
               <>
                 <Link
                   to="/profile"
@@ -56,7 +72,7 @@ const Navbar = () => {
                   Profile
                 </Link>
                 <button
-                  onClick={() => setIsLoggedIn(false)}
+                  onClick={handleLogout}
                   className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
                 >
                   Logout
@@ -109,7 +125,7 @@ const Navbar = () => {
             >
               Courses
             </Link>
-            {isLoggedIn ? (
+            {isLogged ? (
               <>
                 <Link
                   to="/profile"
@@ -120,7 +136,7 @@ const Navbar = () => {
                 </Link>
                 <button
                   onClick={() => {
-                    setIsLoggedIn(false);
+                    handleLogout();
                     toggleMenu();
                   }}
                   className="block w-full text-left px-3 py-2 text-gray-700 hover:text-blue-600"

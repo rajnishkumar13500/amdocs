@@ -6,7 +6,7 @@ export const setLocalStorage = (key, token) => {
   if (!key || typeof window === "undefined") {
     return "";
   }
-  return localStorage.setItem(key, token);
+  localStorage.setItem(key, token);
 };
 
 const getFromLocalStorage = (key) => {
@@ -30,16 +30,14 @@ export const getUserInfo = () => {
       console.error("Error decoding token:", error);
       return null;
     }
-  } else {
-    return null;
   }
+  return null;
 };
 
 export const isLoggedIn = () => {
-  const authToken = getFromLocalStorage(authKey);
-  return !!authToken;
+  return getUserInfo() !== null;
 };
 
 export const loggedOut = () => {
-  return localStorage.removeItem(authKey);
+  localStorage.removeItem(authKey);
 };

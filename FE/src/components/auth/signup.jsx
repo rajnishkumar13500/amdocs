@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 import { apiList } from "../../api/apilist";
 import { apiClient } from "../../api/api";
 import { storeUserInfo } from "./auth.service";
@@ -43,7 +43,7 @@ const Signup = () => {
     }
 
     try {
-      const response = await apiClient.post("/auth/signup", {
+      const response = await apiClient.post(apiList.signup, {
         name: formData.name,
         email: formData.email,
         password: formData.password,
