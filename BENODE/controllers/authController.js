@@ -88,6 +88,16 @@ const authController = {
       res.status(500).json({ error: "Error logging in" });
     }
   },
+  getProfile: async (req, res) => {
+    try {
+      const profile = await prisma.user.findUnique({
+        where: { id: req.user.id },
+      });
+      res.json({ profile });
+    } catch (error) {
+      res.status(500).json({ error: "Error fetching profile" });
+    }
+  },
 
   updateProfile: async (req, res) => {
     try {
