@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import CourseDescription from "../components/course/discriptionCard";
-import BillingCard from "../components/course/BillingCard";
+// import BillingCard from "../components/course/BillingCard";
 
 const CourseDetails = () => {
   const { courseId } = useParams();
@@ -49,9 +49,9 @@ const CourseDetails = () => {
         <div className="lg:col-span-2">
           <CourseDescription {...courseData} courseId={courseId} />
         </div>
-        <div className="lg:col-span-1 sticky top-4">
+        {/* <div className="lg:col-span-1 sticky top-4">
           <BillingCard courseCost={courseData.cost} />
-        </div>
+        </div> */}
       </div>
     </div>
   );
