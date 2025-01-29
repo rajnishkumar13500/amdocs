@@ -10,11 +10,14 @@ import SkillInfo from "./components/userInfo/userSkillinfo";
 import About from "./components/pages/about";
 import UserDashboard from "./components/dashboard/userDashboard";
 import AuthProctor from "./components/auth/authProctor";
+import { Toaster } from "react-hot-toast";
 import ShowProfile from "./components/userInfo/showProfile";
 import UserSkillInfo from "./components/userInfo/userSkillinfo";
 
 function App() {
   return (
+    <>
+      <Toaster position="top-right" />
     <div className="min-h-screen bg-gray-50">
       <Navbar />
       <div className="container mx-auto px-4 py-8">
@@ -60,8 +63,7 @@ function App() {
           />
         </Routes>
       </div>
-      <Footer />
-    </div>
+    </>
   );
 }
 
