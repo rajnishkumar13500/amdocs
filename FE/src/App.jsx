@@ -10,33 +10,37 @@ import SkillInfo from "./components/userInfo/userSkillinfo";
 import About from "./components/pages/about";
 import UserDashboard from "./components/dashboard/userDashboard";
 import AuthProctor from "./components/auth/authProctor";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
-      <div className="container mx-auto px-4 py-8">
-        <Routes>
-          <Route
-            path="/dashboard"
-            element={
-              <AuthProctor>
-                <UserDashboard />
-              </AuthProctor>
-            }
-          />
-          <Route path="/" element={<SkillInfo />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/courses" element={<Courses />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/courses" element={<Courses />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/course/:courseId" element={<CourseDetails />} />
-        </Routes>
+    <>
+      <Toaster position="top-right" />
+      <div className="min-h-screen bg-gray-50">
+        <Navbar />
+        <div className="container mx-auto px-4 py-8">
+          <Routes>
+            <Route
+              path="/dashboard"
+              element={
+                <AuthProctor>
+                  <UserDashboard />
+                </AuthProctor>
+              }
+            />
+            <Route path="/" element={<SkillInfo />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/courses" element={<Courses />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/courses" element={<Courses />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/course/:courseId" element={<CourseDetails />} />
+          </Routes>
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </>
   );
 }
 
