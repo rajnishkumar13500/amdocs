@@ -5,4 +5,6 @@ export const endPoints = {
   courses: "/courses",
   courseEnroll: (id) => `/courses/${id}/enroll`,
   userInfo: "/auth/profile",
+  modelTrain: "/recommendations/train",
+  modelPredict: "/recommendations/ml-recommendations",
 };
