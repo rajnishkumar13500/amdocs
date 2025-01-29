@@ -3,6 +3,7 @@ import { apiClient } from "../../api/api";
 import { apiList } from "../../api/apilist";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { getUserInfo } from "../auth/auth.service";
 
 const CourseDescription = ({
   courseImage,
@@ -17,8 +18,14 @@ const CourseDescription = ({
   courseId,
 }) => {
   const navigate = useNavigate();
+  const userInfo = getUserInfo();
 
   const handleEnroll = async () => {
+    if (!userInfo) {
+      // toast.error("Please login to enroll in the course");
+      navigate("/login");
+      return;
+    }
     try {
       const response = await apiClient.post(apiList.courseEnroll(courseId));
       if (response.status === 200 || response.status === 201) {
