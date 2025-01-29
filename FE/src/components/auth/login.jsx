@@ -4,8 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { apiList } from "../../api/apilist";
 import { apiClient } from "../../api/api";
 import { storeUserInfo } from "./auth.service";
+import { useDispatch } from 'react-redux';
+import { login } from '../../redux/features/authSlice';
 
 const Login = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -33,12 +36,12 @@ const Login = () => {
         password: formData.password,
       });
 
-      if (response.data.token) {
-        storeUserInfo(response.data.token);
-        // setTimeout(() => {
-        navigate("/dashboard");
-        // }, 100);
-      }
+      dispatch(login({
+        user: response.data.user,
+        token: response.data.token
+      }));
+      
+      navigate("/dashboard");
     } catch (err) {
       setError(err.response?.data?.message || "Invalid email or password");
     } finally {

@@ -145,7 +145,7 @@ const Navbar = () => {
                 </Link>
                 <button
                   onClick={() => {
-                    handleLogout();
+                    handleLogout;
                     toggleMenu();
                   }}
                   className="block w-full text-left px-3 py-2 text-gray-700 hover:text-blue-600"

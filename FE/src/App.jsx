@@ -8,11 +8,11 @@ import Courses from "./components/course/coursePage";
 import Details from "./components/userInfo/details";
 import SkillInfo from "./components/userInfo/userSkillinfo";
 import About from "./components/pages/about";
+import Home from "./components/pages/home";
 import UserDashboard from "./components/dashboard/userDashboard";
 import AuthProctor from "./components/auth/authProctor";
 import { Toaster } from "react-hot-toast";
 import ShowProfile from "./components/userInfo/showProfile";
-import UserSkillInfo from "./components/userInfo/userSkillinfo";
 
 function App() {
   return (
@@ -22,6 +22,7 @@ function App() {
         <Navbar />
         <div className="container mx-auto px-4 py-8">
           <Routes>
+            <Route path="/" element={<Home />} />
             <Route
               path="/dashboard"
               element={
@@ -30,11 +31,9 @@ function App() {
                 </AuthProctor>
               }
             />
-            <Route path="/" element={<SkillInfo />} />
             <Route path="/about" element={<About />} />
             <Route path="/courses" element={<Courses />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/courses" element={<Courses />} />
             <Route path="/login" element={<Login />} />
             <Route
               path="/profile"
@@ -57,7 +56,7 @@ function App() {
               path="/update-skills"
               element={
                 <AuthProctor>
-                  <UserSkillInfo />
+                  <SkillInfo />
                 </AuthProctor>
               }
             />
