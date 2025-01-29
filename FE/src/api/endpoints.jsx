@@ -3,4 +3,5 @@ export const endPoints = {
   authSignup: "/auth/signup",
   authUpdateProfile: "/auth/update",
   courses: "/courses",
+  userInfo: "/auth/profile",
 };

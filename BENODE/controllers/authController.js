@@ -101,8 +101,9 @@ const authController = {
 
   updateProfile: async (req, res) => {
     try {
+      const userId = req.user.id;
       const {
-        name,
+        age,
         education,
         goals,
         learningStyle,
@@ -120,74 +121,41 @@ const authController = {
         SocialMedia,
         SEO,
         Analytics,
+        isUpdated
       } = req.body;
 
       const updatedUser = await prisma.user.update({
-        where: { id: req.user.id },
+        where: { id: userId },
         data: {
-          name: name || undefined,
+          age: age !== undefined ? age : undefined,
           education: education || undefined,
           goals: goals || undefined,
           learningStyle: learningStyle || undefined,
-          timeAvailable:
-            timeAvailable !== undefined ? parseInt(timeAvailable) : undefined,
-          learningPace:
-            learningPace !== undefined ? parseInt(learningPace) : undefined,
-          WeeklyHours:
-            WeeklyHours !== undefined ? parseInt(WeeklyHours) : undefined,
-          platformVisited:
-            platformVisited !== undefined
-              ? parseInt(platformVisited)
-              : undefined,
+          timeAvailable: timeAvailable !== undefined ? timeAvailable : undefined,
+          learningPace: learningPace !== undefined ? learningPace : undefined,
+          WeeklyHours: WeeklyHours !== undefined ? WeeklyHours : undefined,
+          platformVisited: platformVisited !== undefined ? platformVisited : undefined,
           // Skill levels
-          python: python !== undefined ? parseInt(python) : undefined,
-          Statistics:
-            Statistics !== undefined ? parseInt(Statistics) : undefined,
-          MachineLearning:
-            MachineLearning !== undefined
-              ? parseInt(MachineLearning)
-              : undefined,
-          HTML_CSS: HTML_CSS !== undefined ? parseInt(HTML_CSS) : undefined,
-          JavaScript:
-            JavaScript !== undefined ? parseInt(JavaScript) : undefined,
-          React: React !== undefined ? parseInt(React) : undefined,
-          SocialMedia:
-            SocialMedia !== undefined ? parseInt(SocialMedia) : undefined,
-          SEO: SEO !== undefined ? parseInt(SEO) : undefined,
-          Analytics: Analytics !== undefined ? parseInt(Analytics) : undefined,
-        },
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          education: true,
-          goals: true,
-          learningStyle: true,
-          timeAvailable: true,
-          learningPace: true,
-          WeeklyHours: true,
-          platformVisited: true,
-          python: true,
-          Statistics: true,
-          MachineLearning: true,
-          HTML_CSS: true,
-          JavaScript: true,
-          React: true,
-          SocialMedia: true,
-          SEO: true,
-          Analytics: true,
-          createdAt: true,
-          updatedAt: true,
+          python: python !== undefined ? python : undefined,
+          Statistics: Statistics !== undefined ? Statistics : undefined,
+          MachineLearning: MachineLearning !== undefined ? MachineLearning : undefined,
+          HTML_CSS: HTML_CSS !== undefined ? HTML_CSS : undefined,
+          JavaScript: JavaScript !== undefined ? JavaScript : undefined,
+          React: React !== undefined ? React : undefined,
+          SocialMedia: SocialMedia !== undefined ? SocialMedia : undefined,
+          SEO: SEO !== undefined ? SEO : undefined,
+          Analytics: Analytics !== undefined ? Analytics : undefined,
+          isupdated: isUpdated !== undefined ? isUpdated : undefined
         },
       });
 
       res.json({
         message: "Profile updated successfully",
-        user: updatedUser,
+        user: updatedUser
       });
     } catch (error) {
-      console.error("Update profile error:", error);
-      res.status(500).json({ error: "Error updating profile" });
+      console.error("Error updating profile:", error);
+      res.status(500).json({ error: "Failed to update profile" });
     }
   },
 };
