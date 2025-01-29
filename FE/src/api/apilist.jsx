@@ -24,4 +24,9 @@ export const apiList = {
     apiVersionControl.v1,
     endPoints.courses
   ),
+  userInfo: constructURL(
+    apiRoot.baseAPI,
+    apiVersionControl.v1,
+    endPoints.userInfo
+  ),
 };

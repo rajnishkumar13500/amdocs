@@ -16,6 +16,7 @@ model User {
   updatedAt       DateTime    @updatedAt
 
   // User preferences and settings
+  age             Int         @default(0)
   education       String      @default("")
   goals           String      @default("")
   learningStyle   String      @default("")
