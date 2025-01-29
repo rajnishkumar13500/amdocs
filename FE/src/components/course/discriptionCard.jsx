@@ -34,8 +34,8 @@ const CourseDescription = ({
       }
     } catch (error) {
       console.error("Enrollment error:", error);
-      toast.error(
-        error.response?.data?.message || "Failed to enroll in the course"
+      toast.success(
+        error.response?.data?.message || "Already enrolled in this course"
       );
     }
   };

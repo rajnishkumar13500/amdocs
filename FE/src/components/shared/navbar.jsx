@@ -40,12 +40,21 @@ const Navbar = () => {
 
             {/* Desktop Navigation */}
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-              <Link
-                to="/"
-                className="inline-flex items-center px-1 pt-1 text-gray-700 hover:text-blue-600"
-              >
-                Home
-              </Link>
+              {user ? (
+                <Link
+                  to="/dashboard"
+                  className="inline-flex items-center px-1 pt-1 text-gray-700 hover:text-blue-600"
+                >
+                  Dashboard
+                </Link>
+              ) : (
+                <Link
+                  to="/"
+                  className="inline-flex items-center px-1 pt-1 text-gray-700 hover:text-blue-600"
+                >
+                  Home
+                </Link>
+              )}
               <Link
                 to="/about"
                 className="inline-flex items-center px-1 pt-1 text-gray-700 hover:text-blue-600"
