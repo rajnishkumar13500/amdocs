@@ -18,50 +18,51 @@ function App() {
   return (
     <>
       <Toaster position="top-right" />
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
-      <div className="container mx-auto px-4 py-8">
-        <Routes>
-          <Route
-            path="/dashboard"
-            element={
-              <AuthProctor>
-                <UserDashboard />
-              </AuthProctor>
-            }
-          />
-          <Route path="/" element={<SkillInfo />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/courses" element={<Courses />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/courses" element={<Courses />} />
-          <Route path="/login" element={<Login />} />
-          <Route 
-            path="/profile" 
-            element={
-              <AuthProctor>
-                <ShowProfile />
-              </AuthProctor>
-            } 
-          />
-          <Route path="/course/:courseId" element={<CourseDetails />} />
-          <Route 
-            path="/update-profile" 
-            element={
-              <AuthProctor>
-                <Details />
-              </AuthProctor>
-            } 
-          />
-          <Route 
-            path="/update-skills" 
-            element={
-              <AuthProctor>
-                <UserSkillInfo />
-              </AuthProctor>
-            } 
-          />
-        </Routes>
+      <div className="min-h-screen bg-gray-50">
+        <Navbar />
+        <div className="container mx-auto px-4 py-8">
+          <Routes>
+            <Route
+              path="/dashboard"
+              element={
+                <AuthProctor>
+                  <UserDashboard />
+                </AuthProctor>
+              }
+            />
+            <Route path="/" element={<SkillInfo />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/courses" element={<Courses />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route 
+              path="/profile" 
+              element={
+                <AuthProctor>
+                  <ShowProfile />
+                </AuthProctor>
+              } 
+            />
+            <Route path="/course/:courseId" element={<CourseDetails />} />
+            <Route 
+              path="/update-profile" 
+              element={
+                <AuthProctor>
+                  <Details />
+                </AuthProctor>
+              } 
+            />
+            <Route 
+              path="/update-skills" 
+              element={
+                <AuthProctor>
+                  <UserSkillInfo />
+                </AuthProctor>
+              } 
+            />
+          </Routes>
+        </div>
+        <Footer />
       </div>
     </>
   );
