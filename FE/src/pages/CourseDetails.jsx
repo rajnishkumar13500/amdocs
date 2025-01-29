@@ -4,6 +4,7 @@ import BillingCard from "../components/course/BillingCard";
 
 const CourseDetails = () => {
   const { courseId } = useParams();
+  // console.log(courseId);
   // const [courseData, setCourseData] = useState(null);
   // In a real application, you would fetch course data based on courseId
   const courseData = {
@@ -46,7 +47,7 @@ const CourseDetails = () => {
     <div className="container mx-auto px-4 py-8">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
-          <CourseDescription {...courseData} />
+          <CourseDescription {...courseData} courseId={courseId} />
         </div>
         <div className="lg:col-span-1 sticky top-4">
           <BillingCard courseCost={courseData.cost} />

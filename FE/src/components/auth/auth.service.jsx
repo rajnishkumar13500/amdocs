@@ -9,7 +9,7 @@ export const setLocalStorage = (key, token) => {
   localStorage.setItem(key, token);
 };
 
-const getFromLocalStorage = (key) => {
+export const getFromLocalStorage = (key) => {
   if (!key || typeof window === "undefined") {
     return "";
   }
