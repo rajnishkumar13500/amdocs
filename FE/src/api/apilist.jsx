@@ -36,4 +36,15 @@ export const apiList = {
     apiVersionControl.v1,
     endPoints.userInfo
   ),
+
+  modelTrain: constructURL(
+    apiRoot.baseAPI,
+    apiVersionControl.v1,
+    endPoints.modelTrain
+  ),
+  modelPredict: constructURL(
+    apiRoot.baseAPI,
+    apiVersionControl.v1,
+    endPoints.modelPredict
+  ),
 };
