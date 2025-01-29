@@ -1,22 +1,29 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { FiMenu, FiX } from 'react-icons/fi';
-import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../../redux/features/authSlice';
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { FiMenu, FiX } from "react-icons/fi";
+import { getUserInfo, loggedOut } from "../auth/auth.service";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLogged, setIsLogged] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const user = getUserInfo();
+
+  useEffect(() => {
+    if (user) {
+      setIsLogged(true);
+    } else {
+      setIsLogged(false);
+    }
+  }, [user]);
+
+  const handleLogout = () => {
+    loggedOut();
+    navigate("/login");
+  };
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
-  };
-
-  const handleLogout = () => {
-    dispatch(logout());
-    navigate('/');
   };
 
   return (
@@ -30,10 +37,10 @@ const Navbar = () => {
                 Logo
               </Link>
             </div>
-            
+
             {/* Desktop Navigation */}
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-              {isAuthenticated ? (
+              {user ? (
                 <Link
                   to="/dashboard"
                   className="inline-flex items-center px-1 pt-1 text-gray-700 hover:text-blue-600"
@@ -65,7 +72,7 @@ const Navbar = () => {
 
           {/* Secondary Navigation - Auth & Profile */}
           <div className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-4">
-            {isAuthenticated ? (
+            {isLogged ? (
               <>
                 <Link
                   to="/profile"
@@ -106,23 +113,13 @@ const Navbar = () => {
       {isOpen && (
         <div className="sm:hidden">
           <div className="pt-2 pb-3 space-y-1">
-            {isAuthenticated ? (
-              <Link
-                to="/dashboard"
-                className="block px-3 py-2 text-gray-700 hover:text-blue-600"
-                onClick={toggleMenu}
-              >
-                Dashboard
-              </Link>
-            ) : (
-              <Link
-                to="/"
-                className="block px-3 py-2 text-gray-700 hover:text-blue-600"
-                onClick={toggleMenu}
-              >
-                Home
-              </Link>
-            )}
+            <Link
+              to="/"
+              className="block px-3 py-2 text-gray-700 hover:text-blue-600"
+              onClick={toggleMenu}
+            >
+              Home
+            </Link>
             <Link
               to="/about"
               className="block px-3 py-2 text-gray-700 hover:text-blue-600"
@@ -137,7 +134,7 @@ const Navbar = () => {
             >
               Courses
             </Link>
-            {isAuthenticated ? (
+            {isLogged ? (
               <>
                 <Link
                   to="/profile"
@@ -148,7 +145,7 @@ const Navbar = () => {
                 </Link>
                 <button
                   onClick={() => {
-                    handleLogout();
+                    handleLogout;
                     toggleMenu();
                   }}
                   className="block w-full text-left px-3 py-2 text-gray-700 hover:text-blue-600"
