@@ -10,29 +10,9 @@ import SkillInfo from "./components/userInfo/userSkillinfo";
 import About from "./components/pages/about"; 
 import Home from "./components/pages/home";
 import UserDashboard from "./components/dashboard/userDashboard";
-
-function App() {
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
-      <div className="container mx-auto px-4 py-8">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<UserDashboard />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/courses" element={<Courses />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/register" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<Details />} />
-          <Route path="/course/:courseId" element={<CourseDetails />} />
-          <Route path="/skill-info" element={<SkillInfo />} />
-        </Routes>
-
 import AuthProctor from "./components/auth/authProctor";
 import { Toaster } from "react-hot-toast";
 import ShowProfile from "./components/userInfo/showProfile";
-import UserSkillInfo from "./components/userInfo/userSkillinfo";
 
 function App() {
   return (
@@ -42,6 +22,7 @@ function App() {
         <Navbar />
         <div className="container mx-auto px-4 py-8">
           <Routes>
+            <Route path="/" element={<Home />} />
             <Route
               path="/dashboard"
               element={
@@ -50,7 +31,6 @@ function App() {
                 </AuthProctor>
               }
             />
-            <Route path="/" element={<SkillInfo />} />
             <Route path="/about" element={<About />} />
             <Route path="/courses" element={<Courses />} />
             <Route path="/signup" element={<Signup />} />
@@ -76,7 +56,7 @@ function App() {
               path="/update-skills" 
               element={
                 <AuthProctor>
-                  <UserSkillInfo />
+                  <SkillInfo />
                 </AuthProctor>
               } 
             />
