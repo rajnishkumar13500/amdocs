@@ -92,13 +92,6 @@ const authController = {
     try {
       const profile = await prisma.user.findUnique({
         where: { id: req.user.id },
-        include: {
-          enrolledCourses: {
-            include: {
-              course: true // This will include the full course details
-            }
-          }
-        }
       });
       res.json({ profile });
     } catch (error) {
