@@ -73,8 +73,7 @@ const Details = () => {
       newErrors.career_goal = "Career goal is required";
     }
     if (!formData.preferred_learning_style) {
-      newErrors.preferred_learning_style =
-        "Preferred learning style is required";
+      newErrors.preferred_learning_style = "Preferred learning style is required";
     }
     if (
       !formData.time_availability_hours_per_week ||
@@ -84,8 +83,8 @@ const Details = () => {
       newErrors.time_availability_hours_per_week =
         "Time availability must be between 1 and 168 hours";
     }
-    if (!formData.learning_pace) {
-      newErrors.learning_pace = "Learning pace is required";
+    if (!formData.learning_pace || formData.learning_pace < 0.2 || formData.learning_pace > 3) {
+      newErrors.learning_pace = "Learning pace must be between 0.2x and 3x";
     }
     if (
       !formData.weekly_study_hours ||
@@ -120,7 +119,7 @@ const Details = () => {
           goals: formData.career_goal,
           learningStyle: formData.preferred_learning_style,
           timeAvailable: parseInt(formData.time_availability_hours_per_week),
-          learningPace: parseInt(formData.learning_pace),
+          learningPace: parseFloat(formData.learning_pace),
           WeeklyHours: parseInt(formData.weekly_study_hours),
           platformVisited: parseInt(formData.platform_visits_per_week),
         };
@@ -202,9 +201,10 @@ const Details = () => {
                 className="block w-full px-4 py-3 rounded-xl border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
               >
                 <option value="">Select education level</option>
-                <option value="secondary">Secondary</option>
-                <option value="bachelors">Bachelor&apos;s</option>
-                <option value="masters">Master&apos;s</option>
+                <option value="High School">High School</option>
+                <option value="Bachelor">Bachelor</option>
+                <option value="Master">Master</option>
+                <option value="PhD">PhD</option>
               </select>
               {errors.education_level && (
                 <p className="mt-2 text-sm text-red-500 animate-pulse">
@@ -228,9 +228,9 @@ const Details = () => {
                 className="block w-full px-4 py-3 rounded-xl border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
               >
                 <option value="">Select career goal</option>
-                <option value="web">Web Development</option>
-                <option value="data science">Data Science</option>
-                <option value="ai/ml">AI/ML</option>
+                <option value="Data Science">Data Science</option>
+                <option value="Web Development">Web Development</option>
+                <option value="Digital Marketing">Digital Marketing</option>
               </select>
               {errors.career_goal && (
                 <p className="mt-2 text-sm text-red-500 animate-pulse">
@@ -254,8 +254,10 @@ const Details = () => {
                 className="block w-full px-4 py-3 rounded-xl border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
               >
                 <option value="">Select learning style</option>
-                <option value="visual">Visual</option>
-                <option value="theory">Theory</option>
+                <option value="Visual">Visual</option>
+                <option value="Auditory">Auditory</option>
+                <option value="Reading">Reading</option>
+                <option value="Kinesthetic">Kinesthetic</option>
               </select>
               {errors.preferred_learning_style && (
                 <p className="mt-2 text-sm text-red-500 animate-pulse">
@@ -291,21 +293,19 @@ const Details = () => {
                 htmlFor="learning_pace"
                 className="block text-sm font-semibold text-gray-700 mb-2"
               >
-                Learning Pace
+                Learning Pace (0.2x - 3x)
               </label>
-              <select
+              <input
+                type="number"
                 id="learning_pace"
                 name="learning_pace"
                 value={formData.learning_pace}
                 onChange={handleChange}
+                min="0.2"
+                max="3"
+                step="0.1"
                 className="block w-full px-4 py-3 rounded-xl border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-              >
-                <option value="">Select learning pace</option>
-                <option value="1.25">1.25x</option>
-                <option value="1.5">1.5x</option>
-                <option value="1.75">1.75x</option>
-                <option value="2.0">2.0x</option>
-              </select>
+              />
               {errors.learning_pace && (
                 <p className="mt-2 text-sm text-red-500 animate-pulse">
                   {errors.learning_pace}
