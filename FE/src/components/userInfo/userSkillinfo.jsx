@@ -1,6 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { apiList } from "../../api/apilist";
 
 const UserSkillInfo = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     skill_python: "0",
     skill_statistics: "0",
@@ -15,6 +19,41 @@ const UserSkillInfo = () => {
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Fetch existing skills data
+  useEffect(() => {
+    const fetchSkillsData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(apiList.userInfo, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        const userData = response.data.profile;
+        
+        // Map backend data to form fields
+        setFormData({
+          skill_python: userData.python?.toString() || "0",
+          skill_statistics: userData.Statistics?.toString() || "0",
+          skill_machine_learning: userData.MachineLearning?.toString() || "0",
+          skill_html_css: userData.HTML_CSS?.toString() || "0",
+          skill_javascript: userData.JavaScript?.toString() || "0",
+          skill_react: userData.React?.toString() || "0",
+          skill_social_media: userData.SocialMedia?.toString() || "0",
+          skill_seo: userData.SEO?.toString() || "0",
+          skill_analytics: userData.Analytics?.toString() || "0",
+        });
+      } catch (error) {
+        console.error("Error fetching skills data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchSkillsData();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -95,27 +134,58 @@ const UserSkillInfo = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
       setIsSubmitting(true);
-      // Simulate API call
-      setTimeout(() => {
-        console.log(formData);
-        alert("Form submitted successfully!");
+      try {
+        const token = localStorage.getItem("token");
+        // Map the form data to match backend schema
+        const mappedData = {
+          python: parseInt(formData.skill_python),
+          Statistics: parseInt(formData.skill_statistics),
+          MachineLearning: parseInt(formData.skill_machine_learning),
+          HTML_CSS: parseInt(formData.skill_html_css),
+          JavaScript: parseInt(formData.skill_javascript),
+          React: parseInt(formData.skill_react),
+          SocialMedia: parseInt(formData.skill_social_media),
+          SEO: parseInt(formData.skill_seo),
+          Analytics: parseInt(formData.skill_analytics),
+          isUpdated: true // Set isUpdated to true
+        };
+
+        await axios.put(apiList.userUpdateProfile, mappedData, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        // alert("Profile completed successfully!");
+        navigate('/profile');
+      } catch (error) {
+        console.error("Error updating skills:", error);
+        alert("Failed to update skills. Please try again.");
+      } finally {
         setIsSubmitting(false);
-      }, 1000);
+      }
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-[50vh]">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-3xl mx-auto p-8 bg-white rounded-xl shadow-lg my-8">
-      <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">
-        Rate Your Skills
-        <p className="text-sm text-gray-500 mt-2 font-normal">
-          Move the sliders to indicate your proficiency level in each skill
+      <div className="mb-8 text-center">
+        <h1 className="text-3xl font-bold text-gray-800">Rate Your Skills</h1>
+        <p className="text-sm text-gray-500 mt-2">
+          Step 2 of 2: Set your skill levels
         </p>
-      </h1>
+      </div>
 
       <form onSubmit={handleSubmit} className="space-y-8">
         <div className="grid gap-6">

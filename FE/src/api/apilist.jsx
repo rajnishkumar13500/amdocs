@@ -30,4 +30,10 @@ export const apiList = {
       apiVersionControl.v1,
       endPoints.courseEnroll(id)
     ),
+
+  userInfo: constructURL(
+    apiRoot.baseAPI,
+    apiVersionControl.v1,
+    endPoints.userInfo
+  ),
 };

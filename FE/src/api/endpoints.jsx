@@ -3,6 +3,6 @@ export const endPoints = {
   authSignup: "/auth/signup",
   authUpdateProfile: "/auth/update",
   courses: "/courses",
-  // courseEnroll: "/courses/:id/enroll",
   courseEnroll: (id) => `/courses/${id}/enroll`,
+  userInfo: "/auth/profile",
 };
