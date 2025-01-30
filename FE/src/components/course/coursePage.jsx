@@ -1,4 +1,4 @@
-import Card from "../card";
+import Card from "../cards/card";
 import { apiClient } from "../../api/api";
 import { apiList } from "../../api/apilist";
 import { useEffect, useState } from "react";

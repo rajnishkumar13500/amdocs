@@ -6,26 +6,30 @@ import { apiClient } from "../../api/api";
 import { getUserInfo } from "../auth/auth.service";
 import { Link } from "react-router-dom";
 import { FiClock, FiBook, FiAward } from "react-icons/fi";
+// import Card from "../cards/card";
+import RecommendedCard from "../cards/recommendedCard";
 
 const UserDashboard = () => {
   const [enrolledCourses, setEnrolledCourses] = useState([]);
   const [recommendedCourses, setRecommendedCourses] = useState([]);
+  const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const userInfo = getUserInfo();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const trainResponse = await apiClient.post(apiList.modelTrain);
         const [enrolledRes, recommendedRes] = await Promise.all([
           apiClient.get(apiList.userInfo),
-          // apiClient.get(apiList.recommendedCourses),
+          apiClient.post(apiList.modelPredict),
         ]);
-        const trainResponse = await apiClient.post(apiList.modelTrain);
-        const predictResponse = await apiClient.post(apiList.modelPredict);
-        console.log(predictResponse);
-        // console.log(enrolledRes.data);
+        const response = await apiClient.get(apiList.allCourses);
+        // console.log(response);
+        setCourses(response.data);
         setEnrolledCourses(enrolledRes.data.profile.enrolledCourses);
-        // setRecommendedCourses(recommendedRes.data.courses);
+        setRecommendedCourses(recommendedRes.data.data.recommended_courses);
+        console.log(recommendedRes.data.data.recommended_courses);
       } catch (error) {
         console.error("Error fetching courses:", error);
       } finally {
@@ -95,8 +99,26 @@ const UserDashboard = () => {
         <p className="opacity-90">Continue your learning journey</p>
       </div>
 
-      {/* Enrolled Courses Section */}
+      {/* Recommended Courses Section */}
       <section className="mb-12">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-bold text-gray-800">
+            <span className="flex items-center">
+              <FiAward className="mr-2" />
+              Recommended for You
+            </span>
+          </h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {recommendedCourses.map((recommendedCourse) => {
+            const course = courses.find((c) => c.name === recommendedCourse);
+            return course && <RecommendedCard key={course.id} {...course} />;
+          })}
+        </div>
+      </section>
+
+      {/* Enrolled Courses Section */}
+      <section>
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-gray-800">
             <span className="flex items-center">
@@ -134,27 +156,6 @@ const UserDashboard = () => {
             </Link>
           </div>
         )}
-      </section>
-
-      {/* Recommended Courses Section */}
-      <section>
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-gray-800">
-            <span className="flex items-center">
-              <FiAward className="mr-2" />
-              Recommended for You
-            </span>
-          </h2>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {recommendedCourses.map((course) => (
-            <CourseCard
-              key={course.id}
-              course={course.course}
-              type="recommended"
-            />
-          ))}
-        </div>
       </section>
     </div>
   );
