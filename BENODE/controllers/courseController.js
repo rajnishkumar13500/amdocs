@@ -78,12 +78,13 @@ const courseController = {
 
   updateProgress: async (req, res) => {
     try {
-      const { progress } = req.body;
+      const{cId,progress} = req.body;
+      
       const enrollment = await prisma.userCourse.update({
         where: {
           userId_courseId: {
             userId: req.user.id,
-            courseId: parseInt(req.params.id),
+            courseId: cId,
           },
         },
         data: { progress },

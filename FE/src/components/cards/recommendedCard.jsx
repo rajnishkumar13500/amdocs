@@ -117,7 +117,7 @@ RecommendedCard.propTypes = {
   image: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   difficulty: PropTypes.string.isRequired,
 };
 

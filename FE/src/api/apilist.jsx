@@ -47,4 +47,9 @@ export const apiList = {
     apiVersionControl.v1,
     endPoints.modelPredict
   ),
+  courseProgress: constructURL(
+    apiRoot.baseAPI,
+    apiVersionControl.v1,
+    endPoints.courseProgress
+  ),
 };
