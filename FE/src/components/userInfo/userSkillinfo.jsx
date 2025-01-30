@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 import { apiList } from "../../api/apilist";
+import { apiClient } from "../../api/api";
 
 const UserSkillInfo = () => {
   const navigate = useNavigate();
@@ -25,12 +26,8 @@ const UserSkillInfo = () => {
   useEffect(() => {
     const fetchSkillsData = async () => {
       try {
-        const token = localStorage.getItem("token");
-        const response = await axios.get(apiList.userInfo, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
+        // const token = localStorage.getItem("token");
+        const response = await apiClient.get(apiList.userInfo);
         const userData = response.data.profile;
         
         // Map backend data to form fields
@@ -139,7 +136,7 @@ const UserSkillInfo = () => {
     if (validateForm()) {
       setIsSubmitting(true);
       try {
-        const token = localStorage.getItem("token");
+        // const token = localStorage.getItem("token");
         // Map the form data to match backend schema
         const mappedData = {
           python: parseInt(formData.skill_python),
@@ -154,11 +151,7 @@ const UserSkillInfo = () => {
           isUpdated: true // Set isUpdated to true
         };
 
-        await axios.put(apiList.userUpdateProfile, mappedData, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
+        await apiClient.put(apiList.userUpdateProfile, mappedData);
         // alert("Profile completed successfully!");
         navigate('/profile');
       } catch (error) {

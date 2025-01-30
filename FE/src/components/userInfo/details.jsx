@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 import { apiList } from "../../api/apilist";
+import { apiClient } from "../../api/api";
 
 const Details = () => {
   const navigate = useNavigate();
@@ -24,12 +25,8 @@ const Details = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const token = localStorage.getItem("token");
-        const response = await axios.get(apiList.userInfo, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
+        // const token = localStorage.getItem("token");
+        const response = await apiClient.get(apiList.userInfo);
         const userData = response.data.profile;
         
         // Map backend data to form fields
@@ -111,7 +108,7 @@ const Details = () => {
     if (validateForm()) {
       setIsSubmitting(true);
       try {
-        const token = localStorage.getItem("token");
+        // const token = localStorage.getItem("token");
         // Map form data to match backend schema
         const mappedData = {
           age: parseInt(formData.age),
@@ -126,11 +123,7 @@ const Details = () => {
 
         console.log('Sending update data:', mappedData);
 
-        const response = await axios.put(apiList.userUpdateProfile, mappedData, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
+        const response = await apiClient.put(apiList.userUpdateProfile, mappedData);
 
         console.log('Update response:', response.data);
         

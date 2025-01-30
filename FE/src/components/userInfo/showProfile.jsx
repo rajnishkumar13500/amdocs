@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
 import { apiList } from "../../api/apilist";
 import { useNavigate } from "react-router-dom";
+import { apiClient } from "../../api/api";
 
 const ShowProfile = () => {
   const [profile, setProfile] = useState(null);
@@ -12,13 +13,9 @@ const ShowProfile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const token = localStorage.getItem("token");
-        console.log("Fetching profile with token:", token);
-        const response = await axios.get(apiList.userInfo, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
+        // const token = localStorage.getItem("token");
+        // console.log("Fetching profile with token:", token);
+        const response = await apiClient.get(apiList.userInfo);
         console.log("Profile response:", response.data);
         setProfile(response.data.profile);
         setLoading(false);
@@ -36,9 +33,9 @@ const ShowProfile = () => {
     navigate('/update-profile');
   };
 
-  const handleUpdateSkills = () => {
-    navigate('/update-skills');
-  };
+  // const handleUpdateSkills = () => {
+  //   navigate('/update-skills');
+  // };
 
   if (loading) {
     return (
