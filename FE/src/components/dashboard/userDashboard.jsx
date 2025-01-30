@@ -28,8 +28,8 @@ const UserDashboard = () => {
         // console.log(response);
         setCourses(response.data);
         setEnrolledCourses(enrolledRes.data.profile.enrolledCourses);
-        setRecommendedCourses(recommendedRes.data.data.recommended_courses);
-        console.log(recommendedRes.data.data.recommended_courses);
+        setRecommendedCourses(recommendedRes.data.data);
+        console.log(recommendedRes.data.data);
       } catch (error) {
         console.error("Error fetching courses:", error);
       } finally {
@@ -97,6 +97,34 @@ const UserDashboard = () => {
           Welcome back, {userInfo?.name}!
         </h1>
         <p className="opacity-90">Continue your learning journey</p>
+
+        {/* Added Success Rate Card */}
+        <div
+          className="mt-4 bg-red-500/20 backdrop-blur-sm rounded-lg p-4 border border-red-400/30 shadow-lg
+            hover:bg-red-500/30 transition-all duration-300"
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <FiAward className="text-red-400 w-5 h-5 animate-bounce" />
+              <span className="text-white font-medium">
+                Predicted Goal Success Rate
+              </span>
+            </div>
+            <div className="flex items-center gap-3">
+              <div
+                className="text-3xl font-bold bg-gradient-to-r from-red-300 to-red-100 
+                text-transparent bg-clip-text tracking-wider"
+              >
+                {Math.round(recommendedCourses.predicted_success_rate)}%
+              </div>
+              <div className="flex gap-1">
+                <div className="w-2 h-2 rounded-full bg-red-400 animate-pulse"></div>
+                <div className="w-2 h-2 rounded-full bg-red-300 animate-pulse delay-100"></div>
+                <div className="w-2 h-2 rounded-full bg-red-200 animate-pulse delay-200"></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Recommended Courses Section */}
@@ -110,7 +138,7 @@ const UserDashboard = () => {
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {recommendedCourses.map((recommendedCourse) => {
+          {recommendedCourses.recommended_courses.map((recommendedCourse) => {
             const course = courses.find((c) => c.name === recommendedCourse);
             return course && <RecommendedCard key={course.id} {...course} />;
           })}
