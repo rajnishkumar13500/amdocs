@@ -40,6 +40,21 @@ const UserDashboard = () => {
   }, []);
   // console.log(enrolledCourses);
 
+  const recommendedCourseElements = [];
+  for (let i = 0; i < recommendedCourses?.recommended_courses?.length; i++) {
+    const recommendedCourse = recommendedCourses.recommended_courses[i];
+    const course = courses.find((c) => c.name === recommendedCourse);
+    if (course) {
+      recommendedCourseElements.push(
+        <RecommendedCard
+          key={course.id}
+          {...course}
+          difficulty={recommendedCourses?.skill_gaps[i]?.difficulty}
+        />
+      );
+    }
+  }
+
   const CourseCard = ({ course, type }) => (
     <div className="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:transform hover:scale-[1.02]">
       <div className="relative h-48">
@@ -107,7 +122,7 @@ const UserDashboard = () => {
             <div className="flex items-center gap-2">
               <FiAward className="text-red-400 w-5 h-5 animate-bounce" />
               <span className="text-white font-medium">
-                Predicted Goal Success Rate
+                Predicted Goal Completion Rate
               </span>
             </div>
             <div className="flex items-center gap-3">
@@ -138,10 +153,11 @@ const UserDashboard = () => {
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {recommendedCourses.recommended_courses.map((recommendedCourse) => {
+          {recommendedCourseElements}
+          {/* {recommendedCourses.recommended_courses.map((recommendedCourse) => {
             const course = courses.find((c) => c.name === recommendedCourse);
             return course && <RecommendedCard key={course.id} {...course} />;
-          })}
+          })} */}
         </div>
       </section>
 

@@ -2,8 +2,36 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { FiStar } from "react-icons/fi";
 
-const RecommendedCard = ({ image, name, description, id }) => {
+const RecommendedCard = ({ image, name, description, id, difficulty }) => {
   const navigate = useNavigate();
+  // console.log(difficulty);
+
+  const getDifficultyColor = (level) => {
+    switch (level?.toLowerCase()) {
+      case "beginner":
+        return {
+          bg: "bg-gradient-to-r from-green-500 to-emerald-600",
+          border: "border-green-400",
+        };
+      case "intermediate":
+        return {
+          bg: "bg-gradient-to-r from-yellow-400 to-orange-500",
+          border: "border-yellow-400",
+        };
+      case "advanced":
+        return {
+          bg: "bg-gradient-to-r from-red-500 to-rose-600",
+          border: "border-red-400",
+        };
+      default:
+        return {
+          bg: "bg-gradient-to-r from-blue-500 to-indigo-600",
+          border: "border-blue-400",
+        };
+    }
+  };
+
+  const difficultyStyle = getDifficultyColor(difficulty);
 
   return (
     <div
@@ -23,6 +51,19 @@ const RecommendedCard = ({ image, name, description, id }) => {
         >
           <FiStar className="animate-spin-slow text-white h-4 w-4" />
           <span className="tracking-wide">RECOMMENDED</span>
+        </div>
+      </div>
+
+      {/* Enhanced Difficulty Label */}
+      <div className="absolute -right-16 top-7 rotate-45 z-20 w-[220px]">
+        <div
+          className={`${difficultyStyle.bg} py-1.5 text-center text-xs font-bold text-white
+          shadow-lg border-t border-b ${difficultyStyle.border} backdrop-blur-sm
+          transition-all duration-300 group-hover:scale-110`}
+        >
+          <span className="tracking-widest uppercase">
+            {difficulty || "All Levels"}
+          </span>
         </div>
       </div>
 
@@ -77,6 +118,7 @@ RecommendedCard.propTypes = {
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
+  difficulty: PropTypes.string.isRequired,
 };
 
 export default RecommendedCard;
