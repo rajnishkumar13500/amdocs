@@ -18,26 +18,19 @@ const CourseDetails = () => {
   }, []);
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2">
-          {courses?.map((course) => {
-            if (course.id == courseId) {
-              return (
-                <CourseDescription
-                  key={course.id}
-                  {...course}
-                  courseId={courseId}
-                />
-              );
-            }
-          })}
-        </div>
-
-        {/* <div className="lg:col-span-1 sticky top-4">
-          <BillingCard courseCost={courseData.cost} />
-        </div> */}
-      </div>
+    <div className="w-full min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
+      {courses?.map((course) => {
+        if (course.id == courseId) {
+          return (
+            <CourseDescription
+              key={course.id}
+              {...course}
+              courseId={courseId}
+            />
+          );
+        }
+        return null; // Add explicit return for when condition is false
+      })}
     </div>
   );
 };
