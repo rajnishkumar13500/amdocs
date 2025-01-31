@@ -4,9 +4,12 @@ module.exports = {
     extend: {
       animation: {
         "card-shine": "card-shine 6s ease-in-out infinite",
-        "spin-slow": "spin 4s linear infinite",
+        "spin-slow": "spin 3s linear infinite",
         "fade-in-up": "fadeInUp 0.5s ease-out",
         "fade-in": "fadeIn 0.5s ease-out",
+        shake: "shake 0.8s cubic-bezier(.36,.07,.19,.97) both",
+        blob: "blob 7s infinite",
+        "text-shimmer": "text-shimmer 2.5s ease-out infinite alternate",
       },
       keyframes: {
         "card-shine": {
@@ -94,6 +97,41 @@ module.exports = {
         fadeIn: {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
+        },
+        shake: {
+          "0%, 100%": { transform: "translateX(0)" },
+          "10%, 30%, 50%, 70%, 90%": { transform: "translateX(-4px)" },
+          "20%, 40%, 60%, 80%": { transform: "translateX(4px)" },
+        },
+        blob: {
+          "0%": {
+            transform: "translate(0px, 0px) scale(1)",
+          },
+          "33%": {
+            transform: "translate(30px, -50px) scale(1.1)",
+          },
+          "66%": {
+            transform: "translate(-20px, 20px) scale(0.9)",
+          },
+          "100%": {
+            transform: "translate(0px, 0px) scale(1)",
+          },
+        },
+        "text-shimmer": {
+          "0%": {
+            backgroundPosition: "0% 50%",
+          },
+          "100%": {
+            backgroundPosition: "100% 50%",
+          },
+        },
+      },
+      utilities: {
+        ".animation-delay-2000": {
+          "animation-delay": "2s",
+        },
+        ".animation-delay-4000": {
+          "animation-delay": "4s",
         },
       },
     },
