@@ -15,15 +15,12 @@ const CourseDescription = ({
   Instructor,
   Prerequisites,
   id,
-  Link,
 }) => {
   const navigate = useNavigate();
   const userInfo = getUserInfo();
-  // console.log(Link);
 
   const handleEnroll = async () => {
     if (!userInfo) {
-      // toast.error("Please login to enroll in the course");
       navigate("/login");
       return;
     }
@@ -42,84 +39,151 @@ const CourseDescription = ({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 max-w-4xl mx-auto">
-      {/* Course Header */}
-      <div>
-        <iframe
-          src={Link}
-          title="Course Content"
-          className="w-full h-96 border-0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <img
-          src={image}
-          alt={name}
-          className="w-full h-[300px] object-cover rounded-lg"
-        />
+    <div className="w-full">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Hero Section */}
+        <div className="bg-white rounded-3xl shadow-2xl overflow-hidden transform hover:scale-[1.02] transition-transform duration-300">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+            {/* Left Column - Course Info */}
+            <div className="p-8 lg:p-12 bg-gradient-to-br from-white to-blue-50">
+              <div className="space-y-6">
+                <h1 className="text-4xl font-bold text-gray-900 mb-4 leading-tight">
+                  {name}
+                </h1>
+                <p className="text-lg text-gray-600 leading-relaxed">
+                  {description}
+                </p>
 
-        <div className="flex flex-col justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-800 mb-4">{name}</h1>
-            <div className="mb-4">
-              <span className="text-gray-600 font-semibold">Duration:</span>
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="bg-white p-6 rounded-2xl shadow-md border border-blue-100 hover:shadow-lg transition-shadow">
+                    <span className="block text-sm text-blue-600 font-medium mb-2">
+                      <i className="fas fa-clock mr-2"></i>Duration
+                    </span>
+                    <span className="text-xl font-semibold text-gray-900">
+                      {Duration}
+                    </span>
+                  </div>
+                  <div className="bg-white p-6 rounded-2xl shadow-md border border-green-100 hover:shadow-lg transition-shadow">
+                    <span className="block text-sm text-green-600 font-medium mb-2">
+                      <i className="fas fa-indian-rupee-sign mr-2"></i>Cost
+                    </span>
+                    <span className="text-xl font-semibold text-gray-900">
+                      ₹{Cost}
+                    </span>
+                  </div>
+                </div>
 
-              <span className="ml-2 text-gray-700">{Duration}</span>
+                <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-100">
+                  <div className="flex items-center">
+                    <div className="relative">
+                      <img
+                        src={`https://ui-avatars.com/api/?name=${Instructor}&background=random`}
+                        alt={Instructor}
+                        className="w-16 h-16 rounded-full ring-4 ring-blue-100"
+                      />
+                      <div className="absolute -bottom-1 -right-1 bg-green-500 rounded-full p-1">
+                        <div className="bg-white rounded-full p-1">
+                          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="ml-6">
+                      <p className="text-sm text-gray-500 mb-1">Instructor</p>
+                      <p className="text-xl font-semibold text-gray-900">
+                        {Instructor}
+                      </p>
+                      <p className="text-sm text-blue-600">Expert Mentor</p>
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  onClick={handleEnroll}
+                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 px-8 rounded-xl 
+                  font-semibold hover:from-blue-700 hover:to-indigo-700 transform transition duration-200 
+                  hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
+                  shadow-lg hover:shadow-xl"
+                >
+                  Enroll Now
+                </button>
+              </div>
             </div>
-            <div className="mb-4">
-              <span className="text-gray-600 font-semibold">Instructor:</span>
 
-              <span className="ml-2 text-gray-700">{Instructor}</span>
-            </div>
-            <div className="mb-4">
-              <span className="text-gray-600 font-semibold">Cost:</span>
-
-              <span className="ml-2 text-green-600 font-bold">₹{Cost}</span>
+            {/* Right Column - Video */}
+            <div className="relative bg-gray-900 lg:min-h-[600px] min-h-[400px]">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 z-10"></div>
+              <iframe
+                src="https://www.youtube.com/embed/r-V1uZx-ndM"
+                title="Course Content"
+                className="absolute inset-0 w-full h-full z-20"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
             </div>
           </div>
-          <button
-            onClick={handleEnroll}
-            className="bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300"
-          >
-            Enroll Now
-          </button>
         </div>
-      </div>
 
-      {/* Course Description */}
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">
-          Course Description
-        </h2>
-        <p className="text-gray-600 leading-relaxed">{description}</p>
-      </div>
+        {/* Course Details Sections */}
+        <div className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Prerequisites */}
+          <div className="bg-white p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-shadow duration-300 border border-gray-100 h-full">
+            <h2 className="text-2xl font-bold text-gray-900 mb-8 flex items-center">
+              <span className="bg-blue-100 p-3 rounded-xl mr-4">
+                <i className="fas fa-list-check text-blue-600"></i>
+              </span>
+              Prerequisites
+            </h2>
+            <ul className="space-y-4">
+              {Prerequisites?.split(",").map((prerequisite, index) => (
+                <li
+                  key={index}
+                  className="flex items-center transform hover:translate-x-2 transition-transform duration-200"
+                >
+                  <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-green-100 rounded-lg mr-4">
+                    <svg
+                      className="w-5 h-5 text-green-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                  </div>
+                  <span className="text-gray-700 font-medium">
+                    {prerequisite
+                      .trim()
+                      .split(" ")
+                      .map((word) => word[0]?.toUpperCase() + word.slice(1))
+                      .join(" ")}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-      {/* Prerequisites */}
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">Prerequisites</h2>
-        <ul className="list-disc list-inside space-y-2">
-          {Prerequisites?.split(",").map((prerequisite, index) => (
-            <li key={index} className="text-gray-600">
-              {prerequisite
-                .trim()
-                .split(" ")
-                .map((word) => word[0]?.toUpperCase() + word.slice(1))
-                .join(" ")}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* Course Structure */}
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">
-          Course Structure
-        </h2>
-        <div className="space-y-4">
-          <div className="border-b border-gray-200 pb-4">
-            <p className="text-gray-600">{CourseStructure}</p>
+          {/* Course Structure */}
+          <div className="bg-white p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-shadow duration-300 lg:col-span-2 border border-gray-100 h-full">
+            <h2 className="text-2xl font-bold text-gray-900 mb-8 flex items-center">
+              <span className="bg-purple-100 p-3 rounded-xl mr-4">
+                <i className="fas fa-book-open text-purple-600"></i>
+              </span>
+              Course Structure
+            </h2>
+            <div className="prose max-w-none text-gray-700">
+              {CourseStructure.split("\n").map((paragraph, index) => (
+                <p
+                  key={index}
+                  className="mb-6 leading-relaxed hover:text-gray-900 transition-colors duration-200"
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -137,7 +201,6 @@ CourseDescription.propTypes = {
   Cost: PropTypes.number.isRequired,
   Instructor: PropTypes.string.isRequired,
   Prerequisites: PropTypes.string.isRequired,
-  Link: PropTypes.string.isRequired,
 };
 
 export default CourseDescription;
