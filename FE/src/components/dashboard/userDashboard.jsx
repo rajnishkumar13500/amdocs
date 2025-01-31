@@ -5,32 +5,53 @@ import { apiList } from "../../api/apilist";
 import { apiClient } from "../../api/api";
 import { getUserInfo } from "../auth/auth.service";
 import { Link } from "react-router-dom";
-import {  FiBook, FiAward } from "react-icons/fi";
+import { FiBook, FiAward } from "react-icons/fi";
 // import Card from "../cards/card";
 import RecommendedCard from "../cards/recommendedCard";
 import { EnrolledCourseCard } from "../cards/enrolledCard";
+import Loader from "./loader";
 
 const UserDashboard = () => {
   const [enrolledCourses, setEnrolledCourses] = useState([]);
   const [recommendedCourses, setRecommendedCourses] = useState([]);
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
-  const userInfo = getUserInfo()
+  const [profileUpdated, setProfileUpdated] = useState(false);
+  const userInfo = getUserInfo();
+  // console.log(userInfo);
+  const [recommendLoading, setRecommendLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const trainResponse = await apiClient.post(apiList.modelTrain);
-        const [enrolledRes, recommendedRes] = await Promise.all([
-          apiClient.get(apiList.userInfo),
-          apiClient.post(apiList.modelPredict),
-        ]);
+        // const userProfile = await apiClient.get(apiList.userGetProfile);
+        // console.log(userProfile.data.profile.isupdated);
+        // console.log(userProfile.data);
+        // const trainResponse = await apiClient.post(apiList.modelTrain);
+        const enrolledRes = await apiClient.get(apiList.userInfo);
+        // Promise.all([
+        //   apiClient.get(apiList.userInfo),
+
+        //   apiClient.post(apiList.modelPredict),
+        // ]);
+
         const response = await apiClient.get(apiList.allCourses);
         // console.log(response);
+        // console.log(enrolledRes);
+        setProfileUpdated(enrolledRes.data.profile.isupdated);
+        // console.log(enrolledRes.data.profile.isupdated);
+        // console.log(profileUpdated);
         setCourses(response.data);
         setEnrolledCourses(enrolledRes.data.profile.enrolledCourses);
-        setRecommendedCourses(recommendedRes.data.data);
-        console.log(recommendedRes.data.data);
+        // setRecommendLoading();
+        if (profileUpdated) {
+          await apiClient.post(apiList.modelTrain);
+          const recommendedRes = await apiClient.post(apiList.modelPredict);
+          setRecommendedCourses(recommendedRes.data.data);
+          console.log(recommendedRes.data.data);
+          setRecommendLoading(false);
+          console.log(recommendLoading);
+        }
       } catch (error) {
         console.error("Error fetching courses:", error);
       } finally {
@@ -38,8 +59,7 @@ const UserDashboard = () => {
       }
     };
     fetchData();
-  }, []);
-  console.log(enrolledCourses);
+  }, [profileUpdated, recommendLoading]);
 
   const recommendedCourseElements = [];
   for (let i = 0; i < recommendedCourses?.recommended_courses?.length; i++) {
@@ -55,8 +75,6 @@ const UserDashboard = () => {
       );
     }
   }
-
-  
 
   if (loading) {
     return (
@@ -92,8 +110,18 @@ const UserDashboard = () => {
                 className="text-3xl font-bold bg-gradient-to-r from-red-300 to-red-100 
                 text-transparent bg-clip-text tracking-wider"
               >
-                {Math.round(recommendedCourses.predicted_success_rate)}%
+                {profileUpdated ? (
+                  recommendLoading ? (
+                    <Loader />
+                  ) : (
+                    `${recommendedCourses?.predicted_success_rate?.toFixed(2)}%`
+                  )
+                ) : (
+                  ""
+                  // <h1>Please update your profile to get recommended courses</h1>
+                )}
               </div>
+
               <div className="flex gap-1">
                 <div className="w-2 h-2 rounded-full bg-red-400 animate-pulse"></div>
                 <div className="w-2 h-2 rounded-full bg-red-300 animate-pulse delay-100"></div>
@@ -114,13 +142,31 @@ const UserDashboard = () => {
             </span>
           </h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {recommendedCourseElements}
-          {/* {recommendedCourses.recommended_courses.map((recommendedCourse) => {
+        {profileUpdated ? (
+          recommendLoading ? (
+            <Loader />
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {recommendedCourseElements}
+            </div>
+          )
+        ) : (
+          <div className="flex justify-center items-center h-full">
+            <h1>Please update your profile to get recommended courses</h1>
+            <Link
+              to="/profile"
+              className="text-blue-600 m-5 hover:text-blue-700 font-medium"
+            >
+              Update Profile →
+            </Link>
+          </div>
+        )}
+
+        {/* {recommendedCourses.recommended_courses.map((recommendedCourse) => {
             const course = courses.find((c) => c.name === recommendedCourse);
             return course && <RecommendedCard key={course.id} {...course} />;
+
           })} */}
-        </div>
       </section>
 
       {/* Enrolled Courses Section */}
