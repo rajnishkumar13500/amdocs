@@ -4,6 +4,54 @@ import { useNavigate } from "react-router-dom";
 import { apiList } from "../../api/apilist";
 import { apiClient } from "../../api/api";
 
+const InfoIcon = ({ tooltip }) => {
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  return (
+    <div className="relative inline-block ml-2">
+      <span 
+        className="inline-flex items-center text-blue-500 hover:text-blue-600 cursor-help transition-colors duration-200"
+        onMouseEnter={() => setShowTooltip(true)}
+        onMouseLeave={() => setShowTooltip(false)}
+      >
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          viewBox="0 0 20 20" 
+          fill="currentColor" 
+          className="w-4 h-4"
+        >
+          <path 
+            fillRule="evenodd" 
+            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z" 
+            clipRule="evenodd" 
+          />
+        </svg>
+      </span>
+      {showTooltip && (
+        <div className="absolute left-6 top-0 z-[9999] w-64 p-4 
+          bg-white/80 backdrop-blur-lg rounded-xl shadow-xl 
+          border border-white/20 
+          transform transition-all duration-200 
+          text-gray-700"
+        >
+          <div className="relative">
+            {/* Arrow */}
+            <div className="absolute -left-2 top-2 w-2 h-2 
+              bg-white/80 backdrop-blur-lg 
+              border-l border-t border-white/20 
+              transform rotate-45"
+            ></div>
+            {/* Content */}
+            <div className="relative z-10 text-sm">
+              {tooltip}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 const Details = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -60,8 +108,8 @@ const Details = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.age || formData.age < 16 || formData.age > 100) {
-      newErrors.age = "Age must be between 16 and 100";
+    if (!formData.age || formData.age < 16 || formData.age > 60) {
+      newErrors.age = "Age must be between 16 and 60";
     }
     if (!formData.education_level) {
       newErrors.education_level = "Education level is required";
@@ -75,29 +123,29 @@ const Details = () => {
     if (
       !formData.time_availability_hours_per_week ||
       formData.time_availability_hours_per_week < 1 ||
-      formData.time_availability_hours_per_week > 168
+      formData.time_availability_hours_per_week > 15
     ) {
       newErrors.time_availability_hours_per_week =
-        "Time availability must be between 1 and 168 hours";
+        "Time availability must be between 1 and 15 hours";
     }
-    if (!formData.learning_pace || formData.learning_pace < 0.2 || formData.learning_pace > 3) {
-      newErrors.learning_pace = "Learning pace must be between 0.2x and 3x";
+    if (!formData.learning_pace || formData.learning_pace < 0 || formData.learning_pace > 2) {
+      newErrors.learning_pace = "Learning pace must be between 0 and 2";
     }
     if (
       !formData.weekly_study_hours ||
       formData.weekly_study_hours < 1 ||
-      formData.weekly_study_hours > 168
+      formData.weekly_study_hours > 15
     ) {
       newErrors.weekly_study_hours =
-        "Weekly study hours must be between 1 and 168";
+        "Weekly study hours must be between 1 and 15";
     }
     if (
       !formData.platform_visits_per_week ||
       formData.platform_visits_per_week < 1 ||
-      formData.platform_visits_per_week > 7
+      formData.platform_visits_per_week > 10
     ) {
       newErrors.platform_visits_per_week =
-        "Platform visits must be between 1 and 7";
+        "Platform visits must be between 1 and 10";
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -160,9 +208,18 @@ const Details = () => {
             <div className="transition-all duration-300 hover:transform hover:scale-[1.01]">
               <label
                 htmlFor="age"
-                className="block text-sm font-semibold text-gray-700 mb-2"
+                className="block text-sm font-semibold text-gray-700 mb-2 flex items-center"
               >
                 Age
+                <InfoIcon tooltip={
+                  <div>
+                    <p className="font-semibold mb-1">Valid Age Range:</p>
+                    <ul className="list-disc list-inside">
+                      <li>Minimum: 16 years</li>
+                      <li>Maximum: 60 years</li>
+                    </ul>
+                  </div>
+                } />
               </label>
               <input
                 type="number"
@@ -170,6 +227,8 @@ const Details = () => {
                 name="age"
                 value={formData.age}
                 onChange={handleChange}
+                min="16"
+                max="60"
                 className="block w-full px-4 py-3 rounded-xl border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
               />
               {errors.age && (
@@ -262,9 +321,19 @@ const Details = () => {
             <div className="transition-all duration-300 hover:transform hover:scale-[1.01]">
               <label
                 htmlFor="time_availability_hours_per_week"
-                className="block text-sm font-semibold text-gray-700 mb-2"
+                className="block text-sm font-semibold text-gray-700 mb-2 flex items-center"
               >
                 Time Availability (hours per week)
+                <InfoIcon tooltip={
+                  <div>
+                    <p className="font-semibold mb-1">Time Availability:</p>
+                    <ul className="list-disc list-inside">
+                      <li>Minimum: 1 hour/week</li>
+                      <li>Maximum: 15 hours/week</li>
+                      <li>Please be realistic with your time commitment</li>
+                    </ul>
+                  </div>
+                } />
               </label>
               <input
                 type="number"
@@ -272,6 +341,8 @@ const Details = () => {
                 name="time_availability_hours_per_week"
                 value={formData.time_availability_hours_per_week}
                 onChange={handleChange}
+                min="1"
+                max="15"
                 className="block w-full px-4 py-3 rounded-xl border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
               />
               {errors.time_availability_hours_per_week && (
@@ -284,9 +355,19 @@ const Details = () => {
             <div className="transition-all duration-300 hover:transform hover:scale-[1.01]">
               <label
                 htmlFor="learning_pace"
-                className="block text-sm font-semibold text-gray-700 mb-2"
+                className="block text-sm font-semibold text-gray-700 mb-2 flex items-center"
               >
-                Learning Pace (0.2x - 3x)
+                Learning Pace (0 - 2)
+                <InfoIcon tooltip={
+                  <div>
+                    <p className="font-semibold mb-1">Learning Pace Scale:</p>
+                    <ul className="list-disc list-inside">
+                      <li>0: Slow paced learning</li>
+                      <li>1: Moderate pace</li>
+                      <li>2: Fast paced learning</li>
+                    </ul>
+                  </div>
+                } />
               </label>
               <input
                 type="number"
@@ -294,9 +375,9 @@ const Details = () => {
                 name="learning_pace"
                 value={formData.learning_pace}
                 onChange={handleChange}
-                min="0.2"
-                max="3"
-                step="0.1"
+                min="0"
+                max="2"
+                step="1"
                 className="block w-full px-4 py-3 rounded-xl border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
               />
               {errors.learning_pace && (
@@ -309,9 +390,19 @@ const Details = () => {
             <div className="transition-all duration-300 hover:transform hover:scale-[1.01]">
               <label
                 htmlFor="weekly_study_hours"
-                className="block text-sm font-semibold text-gray-700 mb-2"
+                className="block text-sm font-semibold text-gray-700 mb-2 flex items-center"
               >
                 Weekly Study Hours
+                <InfoIcon tooltip={
+                  <div>
+                    <p className="font-semibold mb-1">Study Hours:</p>
+                    <ul className="list-disc list-inside">
+                      <li>Minimum: 1 hour/week</li>
+                      <li>Maximum: 15 hours/week</li>
+                      <li>Choose based on your schedule</li>
+                    </ul>
+                  </div>
+                } />
               </label>
               <input
                 type="number"
@@ -319,6 +410,8 @@ const Details = () => {
                 name="weekly_study_hours"
                 value={formData.weekly_study_hours}
                 onChange={handleChange}
+                min="1"
+                max="15"
                 className="block w-full px-4 py-3 rounded-xl border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
               />
               {errors.weekly_study_hours && (
@@ -331,9 +424,19 @@ const Details = () => {
             <div className="transition-all duration-300 hover:transform hover:scale-[1.01]">
               <label
                 htmlFor="platform_visits_per_week"
-                className="block text-sm font-semibold text-gray-700 mb-2"
+                className="block text-sm font-semibold text-gray-700 mb-2 flex items-center"
               >
                 Platform Visits per Week
+                <InfoIcon tooltip={
+                  <div>
+                    <p className="font-semibold mb-1">Platform Visits:</p>
+                    <ul className="list-disc list-inside">
+                      <li>Minimum: 1 visit/week</li>
+                      <li>Maximum: 10 visits/week</li>
+                      <li>Regular visits help maintain progress</li>
+                    </ul>
+                  </div>
+                } />
               </label>
               <input
                 type="number"
@@ -341,6 +444,8 @@ const Details = () => {
                 name="platform_visits_per_week"
                 value={formData.platform_visits_per_week}
                 onChange={handleChange}
+                min="1"
+                max="10"
                 className="block w-full px-4 py-3 rounded-xl border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
               />
               {errors.platform_visits_per_week && (
