@@ -39,14 +39,14 @@ const CourseDescription = ({
   };
 
   return (
-    <div className="w-full">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="min-h-screen w-full bg-gradient-to-br from-blue-50 to-indigo-50">
+      <div className="container mx-auto px-4 py-12 max-w-[1400px]">
         {/* Hero Section */}
-        <div className="bg-white rounded-3xl shadow-2xl overflow-hidden transform hover:scale-[1.02] transition-transform duration-300">
+        <div className="bg-white rounded-3xl shadow-2xl overflow-hidden transform hover:scale-[1.02] transition-transform duration-300 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
             {/* Left Column - Course Info */}
-            <div className="p-8 lg:p-12 bg-gradient-to-br from-white to-blue-50">
-              <div className="space-y-6">
+            <div className="p-8 lg:p-12 bg-gradient-to-br from-white to-blue-50 h-full">
+              <div className="space-y-6 max-w-2xl mx-auto">
                 <h1 className="text-4xl font-bold text-gray-900 mb-4 leading-tight">
                   {name}
                 </h1>
@@ -110,7 +110,7 @@ const CourseDescription = ({
             </div>
 
             {/* Right Column - Video */}
-            <div className="relative bg-gray-900 lg:min-h-[600px] min-h-[400px]">
+            <div className="relative bg-gray-900 min-h-[600px]">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 z-10"></div>
               <iframe
                 src="https://www.youtube.com/embed/r-V1uZx-ndM"
@@ -124,7 +124,7 @@ const CourseDescription = ({
         </div>
 
         {/* Course Details Sections */}
-        <div className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8 w-full">
           {/* Prerequisites */}
           <div className="bg-white p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-shadow duration-300 border border-gray-100 h-full">
             <h2 className="text-2xl font-bold text-gray-900 mb-8 flex items-center">
