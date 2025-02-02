@@ -7,7 +7,7 @@ if (!BASE_API_URL) {
 }
 
 const api = axios.create({
-  baseURL: BASE_API_URL || "http://localhost:3000/api",
+  baseURL: BASE_API_URL || "https://test.clouldplaydoctor.online/api/",
   headers: {
     "Content-Type": "application/json",
   },

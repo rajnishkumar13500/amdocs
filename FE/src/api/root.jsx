@@ -4,7 +4,7 @@ if (!BASE_API_URL) {
 }
 
 export const apiRoot = {
-  baseAPI: BASE_API_URL || "http://localhost:3000/api",
+  baseAPI: BASE_API_URL || "https://test.clouldplaydoctor.online/api",
 };
 
 // api versions
