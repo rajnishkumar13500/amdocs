@@ -1,5 +1,5 @@
 export const apiRoot = {
-  baseAPI: "http://localhost:3000/api",
+  baseAPI: "https://test.clouldplaydoctor.online/api",
 };
 
 // api versions
