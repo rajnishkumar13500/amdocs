@@ -48,9 +48,9 @@ const UserDashboard = () => {
           await apiClient.post(apiList.modelTrain);
           const recommendedRes = await apiClient.post(apiList.modelPredict);
           setRecommendedCourses(recommendedRes.data.data);
-          console.log(recommendedRes.data.data);
+          // console.log(recommendedRes.data.data);
           setRecommendLoading(false);
-          console.log(recommendLoading);
+          // console.log(recommendLoading);
         }
       } catch (error) {
         console.error("Error fetching courses:", error);
@@ -89,7 +89,15 @@ const UserDashboard = () => {
       {/* Welcome Section */}
       <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-8 mb-8 text-white">
         <h1 className="text-3xl font-bold mb-2">
-          Welcome back, {userInfo?.name}!
+          Welcome back,{" "}
+          {userInfo?.name
+            .split(" ")
+            .map(
+              (name) =>
+                name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()
+            )
+            .join(" ")}
+          !
         </h1>
         <p className="opacity-90">Continue your learning journey</p>
 
@@ -178,12 +186,11 @@ const UserDashboard = () => {
               My Enrolled Courses
             </span>
           </h2>
-          <Link
-            to="/courses"
-            className="text-blue-600 hover:text-blue-700 font-medium"
-          >
-            View All
-          </Link>
+
+          {/* // to="/courses"
+            // className="text-blue-600 hover:text-blue-700 font-medium"
+          // >
+            // View All */}
         </div>
         {enrolledCourses?.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

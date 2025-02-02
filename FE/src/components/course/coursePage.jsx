@@ -9,7 +9,7 @@ const Courses = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       const response = await apiClient.get(apiList.allCourses);
-      console.log(response);
+      // console.log(response);
       setCourses(response.data);
     };
     fetchCourses();

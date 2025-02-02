@@ -15,6 +15,7 @@ const CourseDescription = ({
   Instructor,
   Prerequisites,
   id,
+  Link,
 }) => {
   const navigate = useNavigate();
   const userInfo = getUserInfo();
@@ -113,7 +114,7 @@ const CourseDescription = ({
             <div className="relative bg-gray-900 min-h-[600px]">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 z-10"></div>
               <iframe
-                src="https://www.youtube.com/embed/r-V1uZx-ndM"
+                src={Link}
                 title="Course Content"
                 className="absolute inset-0 w-full h-full z-20"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -201,6 +202,7 @@ CourseDescription.propTypes = {
   Cost: PropTypes.number.isRequired,
   Instructor: PropTypes.string.isRequired,
   Prerequisites: PropTypes.string.isRequired,
+  Link: PropTypes.string.isRequired,
 };
 
 export default CourseDescription;

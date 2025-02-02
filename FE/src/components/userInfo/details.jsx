@@ -9,26 +9,27 @@ const InfoIcon = ({ tooltip }) => {
 
   return (
     <div className="relative inline-block ml-2">
-      <span 
+      <span
         className="inline-flex items-center text-blue-500 hover:text-blue-600 cursor-help transition-colors duration-200"
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
       >
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          viewBox="0 0 20 20" 
-          fill="currentColor" 
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
           className="w-4 h-4"
         >
-          <path 
-            fillRule="evenodd" 
-            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z" 
-            clipRule="evenodd" 
+          <path
+            fillRule="evenodd"
+            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z"
+            clipRule="evenodd"
           />
         </svg>
       </span>
       {showTooltip && (
-        <div className="absolute left-6 top-0 z-[9999] w-64 p-4 
+        <div
+          className="absolute left-6 top-0 z-[9999] w-64 p-4 
           bg-white/80 backdrop-blur-lg rounded-xl shadow-xl 
           border border-white/20 
           transform transition-all duration-200 
@@ -36,15 +37,14 @@ const InfoIcon = ({ tooltip }) => {
         >
           <div className="relative">
             {/* Arrow */}
-            <div className="absolute -left-2 top-2 w-2 h-2 
+            <div
+              className="absolute -left-2 top-2 w-2 h-2 
               bg-white/80 backdrop-blur-lg 
               border-l border-t border-white/20 
               transform rotate-45"
             ></div>
             {/* Content */}
-            <div className="relative z-10 text-sm">
-              {tooltip}
-            </div>
+            <div className="relative z-10 text-sm">{tooltip}</div>
           </div>
         </div>
       )}
@@ -76,14 +76,15 @@ const Details = () => {
         // const token = localStorage.getItem("token");
         const response = await apiClient.get(apiList.userInfo);
         const userData = response.data.profile;
-        
+
         // Map backend data to form fields
         setFormData({
           age: userData.age?.toString() || "",
           education_level: userData.education || "",
           career_goal: userData.goals || "",
           preferred_learning_style: userData.learningStyle || "",
-          time_availability_hours_per_week: userData.timeAvailable?.toString() || "",
+          time_availability_hours_per_week:
+            userData.timeAvailable?.toString() || "",
           learning_pace: userData.learningPace?.toString() || "",
           weekly_study_hours: userData.WeeklyHours?.toString() || "",
           platform_visits_per_week: userData.platformVisited?.toString() || "",
@@ -118,7 +119,8 @@ const Details = () => {
       newErrors.career_goal = "Career goal is required";
     }
     if (!formData.preferred_learning_style) {
-      newErrors.preferred_learning_style = "Preferred learning style is required";
+      newErrors.preferred_learning_style =
+        "Preferred learning style is required";
     }
     if (
       !formData.time_availability_hours_per_week ||
@@ -128,7 +130,11 @@ const Details = () => {
       newErrors.time_availability_hours_per_week =
         "Time availability must be between 1 and 15 hours";
     }
-    if (!formData.learning_pace || formData.learning_pace < 0 || formData.learning_pace > 2) {
+    if (
+      !formData.learning_pace ||
+      formData.learning_pace < 0 ||
+      formData.learning_pace > 2
+    ) {
       newErrors.learning_pace = "Learning pace must be between 0 and 2";
     }
     if (
@@ -169,14 +175,17 @@ const Details = () => {
           platformVisited: parseInt(formData.platform_visits_per_week),
         };
 
-        console.log('Sending update data:', mappedData);
+        // console.log('Sending update data:', mappedData);
 
-        const response = await apiClient.put(apiList.userUpdateProfile, mappedData);
+        const response = await apiClient.put(
+          apiList.userUpdateProfile,
+          mappedData
+        );
 
-        console.log('Update response:', response.data);
-        
+        // console.log('Update response:', response.data);
+
         // Navigate to skills update after successful profile update
-        navigate('/update-skills');
+        navigate("/update-skills");
       } catch (error) {
         console.error("Error updating profile:", error);
         alert("Failed to update profile. Please try again.");
@@ -201,7 +210,9 @@ const Details = () => {
           <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
             Update Profile
           </h1>
-          <p className="text-gray-600 mt-2">Step 1 of 2: Update your career information</p>
+          <p className="text-gray-600 mt-2">
+            Step 1 of 2: Update your career information
+          </p>
         </div>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-6">
@@ -211,15 +222,17 @@ const Details = () => {
                 className="block text-sm font-semibold text-gray-700 mb-2 flex items-center"
               >
                 Age
-                <InfoIcon tooltip={
-                  <div>
-                    <p className="font-semibold mb-1">Valid Age Range:</p>
-                    <ul className="list-disc list-inside">
-                      <li>Minimum: 16 years</li>
-                      <li>Maximum: 60 years</li>
-                    </ul>
-                  </div>
-                } />
+                <InfoIcon
+                  tooltip={
+                    <div>
+                      <p className="font-semibold mb-1">Valid Age Range:</p>
+                      <ul className="list-disc list-inside">
+                        <li>Minimum: 16 years</li>
+                        <li>Maximum: 60 years</li>
+                      </ul>
+                    </div>
+                  }
+                />
               </label>
               <input
                 type="number"
@@ -324,16 +337,18 @@ const Details = () => {
                 className="block text-sm font-semibold text-gray-700 mb-2 flex items-center"
               >
                 Time Availability (hours per week)
-                <InfoIcon tooltip={
-                  <div>
-                    <p className="font-semibold mb-1">Time Availability:</p>
-                    <ul className="list-disc list-inside">
-                      <li>Minimum: 1 hour/week</li>
-                      <li>Maximum: 15 hours/week</li>
-                      <li>Please be realistic with your time commitment</li>
-                    </ul>
-                  </div>
-                } />
+                <InfoIcon
+                  tooltip={
+                    <div>
+                      <p className="font-semibold mb-1">Time Availability:</p>
+                      <ul className="list-disc list-inside">
+                        <li>Minimum: 1 hour/week</li>
+                        <li>Maximum: 15 hours/week</li>
+                        <li>Please be realistic with your time commitment</li>
+                      </ul>
+                    </div>
+                  }
+                />
               </label>
               <input
                 type="number"
@@ -358,16 +373,18 @@ const Details = () => {
                 className="block text-sm font-semibold text-gray-700 mb-2 flex items-center"
               >
                 Learning Pace (0 - 2)
-                <InfoIcon tooltip={
-                  <div>
-                    <p className="font-semibold mb-1">Learning Pace Scale:</p>
-                    <ul className="list-disc list-inside">
-                      <li>0: Slow paced learning</li>
-                      <li>1: Moderate pace</li>
-                      <li>2: Fast paced learning</li>
-                    </ul>
-                  </div>
-                } />
+                <InfoIcon
+                  tooltip={
+                    <div>
+                      <p className="font-semibold mb-1">Learning Pace Scale:</p>
+                      <ul className="list-disc list-inside">
+                        <li>0: Slow paced learning</li>
+                        <li>1: Moderate pace</li>
+                        <li>2: Fast paced learning</li>
+                      </ul>
+                    </div>
+                  }
+                />
               </label>
               <input
                 type="number"
@@ -393,16 +410,18 @@ const Details = () => {
                 className="block text-sm font-semibold text-gray-700 mb-2 flex items-center"
               >
                 Weekly Study Hours
-                <InfoIcon tooltip={
-                  <div>
-                    <p className="font-semibold mb-1">Study Hours:</p>
-                    <ul className="list-disc list-inside">
-                      <li>Minimum: 1 hour/week</li>
-                      <li>Maximum: 15 hours/week</li>
-                      <li>Choose based on your schedule</li>
-                    </ul>
-                  </div>
-                } />
+                <InfoIcon
+                  tooltip={
+                    <div>
+                      <p className="font-semibold mb-1">Study Hours:</p>
+                      <ul className="list-disc list-inside">
+                        <li>Minimum: 1 hour/week</li>
+                        <li>Maximum: 15 hours/week</li>
+                        <li>Choose based on your schedule</li>
+                      </ul>
+                    </div>
+                  }
+                />
               </label>
               <input
                 type="number"
@@ -427,16 +446,18 @@ const Details = () => {
                 className="block text-sm font-semibold text-gray-700 mb-2 flex items-center"
               >
                 Platform Visits per Week
-                <InfoIcon tooltip={
-                  <div>
-                    <p className="font-semibold mb-1">Platform Visits:</p>
-                    <ul className="list-disc list-inside">
-                      <li>Minimum: 1 visit/week</li>
-                      <li>Maximum: 10 visits/week</li>
-                      <li>Regular visits help maintain progress</li>
-                    </ul>
-                  </div>
-                } />
+                <InfoIcon
+                  tooltip={
+                    <div>
+                      <p className="font-semibold mb-1">Platform Visits:</p>
+                      <ul className="list-disc list-inside">
+                        <li>Minimum: 1 visit/week</li>
+                        <li>Maximum: 10 visits/week</li>
+                        <li>Regular visits help maintain progress</li>
+                      </ul>
+                    </div>
+                  }
+                />
               </label>
               <input
                 type="number"
@@ -495,16 +516,16 @@ const Details = () => {
               ) : (
                 <>
                   <span>Next: Update Skills</span>
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    className="h-5 w-5" 
-                    viewBox="0 0 20 20" 
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    viewBox="0 0 20 20"
                     fill="currentColor"
                   >
-                    <path 
-                      fillRule="evenodd" 
-                      d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" 
-                      clipRule="evenodd" 
+                    <path
+                      fillRule="evenodd"
+                      d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                      clipRule="evenodd"
                     />
                   </svg>
                 </>
@@ -513,7 +534,7 @@ const Details = () => {
 
             <button
               type="button"
-              onClick={() => navigate('/profile')}
+              onClick={() => navigate("/profile")}
               className="w-full py-3 px-6 rounded-xl text-gray-700 font-semibold
                 border border-gray-300 hover:bg-gray-50
                 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500

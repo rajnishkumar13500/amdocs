@@ -137,7 +137,7 @@ const Home = () => {
           </p>
           <div className="space-x-6">
             <Link
-              to="/register"
+              to="/courses"
               className="bg-white text-blue-900 px-10 py-4 rounded-full font-semibold hover:bg-blue-50 transition duration-300 transform hover:scale-105 inline-block shadow-lg"
             >
               Get Started Free
