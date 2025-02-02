@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
-import CourseDescription from "../components/course/discriptionCard";
+import CourseDescription from "./description/discriptionCard";
 // import BillingCard from "../components/course/BillingCard";
-import { apiClient } from "../api/api";
-import { apiList } from "../api/apilist";
+import { apiClient } from "../../api/api";
+import { apiList } from "../../api/apilist";
 import { useEffect, useState } from "react";
 
 const CourseDetails = () => {

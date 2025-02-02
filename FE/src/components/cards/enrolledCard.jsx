@@ -1,43 +1,40 @@
 import { FiClock, FiBook } from "react-icons/fi";
-import PropTypes from 'prop-types';
-import { useState } from 'react';
+import PropTypes from "prop-types";
+import { useState } from "react";
 import { apiClient } from "../../api/api";
 import { apiList } from "../../api/apilist";
 
-export const EnrolledCourseCard = ({ course,  userProgress }) => {
+export const EnrolledCourseCard = ({ course, userProgress }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [progress, setProgress] = useState(userProgress || 0);
 
-  const handleProgressChange = async(e) => {
+  const handleProgressChange = async (e) => {
     const newProgress = parseInt(e.target.value);
     setProgress(newProgress);
     try {
-      const response = await apiClient.put(apiList.courseProgress, { 
-        cId: course.id, 
-        progress: newProgress 
+      const response = await apiClient.put(apiList.courseProgress, {
+        cId: course.id,
+        progress: newProgress,
       });
       console.log(response);
     } catch (error) {
-      console.error('Error updating progress:', error);
+      console.error("Error updating progress:", error);
       setProgress(progress); // Revert on error
     }
   };
 
-  // New function to determine color based on progress
   const getProgressColor = (progressValue) => {
     if (progressValue <= 30) {
-      // Red to Yellow gradient
-      return `rgb(239, ${(progressValue * 8.5)}, 68)`;
+      return `rgb(239, ${progressValue * 8.5}, 68)`;
     } else if (progressValue <= 70) {
-      // Yellow to Green gradient
-      return `rgb(${239 - ((progressValue - 30) * 4.8)}, ${255 - ((progressValue - 30) * 2)}, 68)`;
+      return `rgb(${239 - (progressValue - 30) * 4.8}, ${
+        255 - (progressValue - 30) * 2
+      }, 68)`;
     } else {
-      // Green
-      return '#22c55e';
+      return "#22c55e";
     }
   };
 
-  // New function to get the background gradient for the slider
   const getSliderBackground = (progressValue) => {
     const color = getProgressColor(progressValue);
     return `linear-gradient(to right, ${color} ${progressValue}%, #e5e7eb ${progressValue}%)`;
@@ -51,7 +48,7 @@ export const EnrolledCourseCard = ({ course,  userProgress }) => {
           alt={course.image}
           className="w-full h-full object-cover"
         />
-        <div 
+        <div
           className="absolute top-2 right-2 px-2 py-1 rounded-full text-xs text-white"
           style={{ backgroundColor: getProgressColor(progress) }}
         >
@@ -75,7 +72,7 @@ export const EnrolledCourseCard = ({ course,  userProgress }) => {
             <span>{course.Instructor}</span>
           </div>
         </div>
-        <div 
+        <div
           className="mt-4 relative"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
@@ -104,12 +101,12 @@ export const EnrolledCourseCard = ({ course,  userProgress }) => {
                   [&::-moz-range-track]:rounded-lg
                   hover:shadow-lg"
                 style={{
-                  background: getSliderBackground(progress)
+                  background: getSliderBackground(progress),
                 }}
               />
               <div className="flex justify-between items-center mt-2">
                 <span className="text-xs text-gray-500">0%</span>
-                <span 
+                <span
                   className="text-sm font-medium transition-colors duration-300"
                   style={{ color: getProgressColor(progress) }}
                 >
@@ -119,7 +116,7 @@ export const EnrolledCourseCard = ({ course,  userProgress }) => {
               </div>
             </div>
           ) : (
-            <button 
+            <button
               className="inline-flex items-center justify-center w-full px-4 py-2 
                 rounded-lg text-white transition-colors duration-300 hover:shadow-lg
                 bg-blue-600 hover:bg-blue-700"
