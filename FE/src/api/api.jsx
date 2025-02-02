@@ -2,7 +2,7 @@ import axios from "axios";
 import { getFromLocalStorage } from "../components/auth/auth.service";
 
 const api = axios.create({
-  baseURL: "https://test.clouldplaydoctor.online/api/v1",
+  baseURL: "http://localhost:3000/api/v1",
   headers: {
     "Content-Type": "application/json",
   },
