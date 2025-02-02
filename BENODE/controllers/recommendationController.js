@@ -2,7 +2,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const axios = require('axios');
 
-const ML_SERVICE_URL = 'https://amdocsmodel.onrender.com';
+const ML_SERVICE_URL = process.env.MODEL_API_URL || 'https://amdocsmodel.onrender.com';
 
 const recommendationController = {
   getRecommendations: async (req, res) => {

@@ -1,8 +1,13 @@
 import axios from "axios";
 import { getFromLocalStorage } from "../components/auth/auth.service";
 
+const BASE_API_URL = import.meta.env.VITE_APP_BASE_API_URL;
+if (!BASE_API_URL) {
+  console.error("Base API URL is not defined in environment variables");
+}
+
 const api = axios.create({
-  baseURL: "http://localhost:3000/api/v1",
+  baseURL: BASE_API_URL || "http://localhost:3000/api",
   headers: {
     "Content-Type": "application/json",
   },

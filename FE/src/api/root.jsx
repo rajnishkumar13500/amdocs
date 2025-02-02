@@ -1,5 +1,10 @@
+const BASE_API_URL = import.meta.env.VITE_APP_BASE_API_URL;
+if (!BASE_API_URL) {
+  console.error("Base API URL is not defined in environment variables");
+}
+
 export const apiRoot = {
-  baseAPI: "http://localhost:3000/api",
+  baseAPI: BASE_API_URL || "http://localhost:3000/api",
 };
 
 // api versions
